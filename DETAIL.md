@@ -4,8 +4,7 @@
 - #### 新建项目
   - url: '/project'
   - type: 'POST'
-  - params: 
-  aaaa
+  - params:    aaa
 - #### 编辑项目
 - #### 删除项目
 - #### 获取项目列表
