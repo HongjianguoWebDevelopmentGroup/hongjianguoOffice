@@ -2,7 +2,7 @@
 =====================
 ### 项目管理
 - #### 新建项目
-  - url: '/project'
+  - url: '/project'
   - type: 'POST'
   - params: {}
 - #### 编辑项目
