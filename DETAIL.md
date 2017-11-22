@@ -6,22 +6,27 @@
   - type: 'POST'
   - params: 
 ``` javascript
-import Vue from 'vue'
-import Element from 'element-ui'
-
-Vue.use(Element)
-
-// or
-import {
-Select,
-Button
-// ...
-} from 'element-ui'
-
-Vue.component(Select.name, Select)
-Vue.component(Button.name, Button)
-```    
+{
+  name: '',//项目名称 string(1-50;不包含特殊字符)*
+  description: '',//项目描述 string(1-200;不包含特殊字符)
+  customer: '',//客户ID string|number
+  patent: [],//关联专利ID数组 array
+  copyright: [],//关联版权ID数组 array
+  trademark: [],//关联商标ID数组 array
+}
+```
 - #### 编辑项目
+  - url: '/project'
+  - type: 'PUT'
+  - params: 同新建
 - #### 删除项目
+  - url: '/project'
+  - type: 'DELETE'
+  - params: 
+``` javascript
+{
+  id: [],//待删除的项目ID素组 array
+}
+```
 - #### 获取项目列表
-  啊啊啊啊啊
+
