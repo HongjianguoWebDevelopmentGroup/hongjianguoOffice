@@ -20,7 +20,7 @@
   - type: 'PUT'
   - params: 同新建，customer不可变更
 - #### 删除项目
-  - url: '/project'
+  - url: '/project'
   - type: 'DELETE'
   - params: 
 ``` javascript
