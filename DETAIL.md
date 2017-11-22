@@ -38,7 +38,7 @@
     listRows: '',
   }
   ```
-  -response:
+  - response:
   ``` javascript
   {
     name: '',
@@ -46,7 +46,7 @@
     customer: '',
     patent: [],
     copyright: [],
-    trademark: [],\\
+    trademark: [],
   }
   ```
 
