@@ -10,15 +10,15 @@
   name: '',//项目名称 string(1-50;不包含特殊字符)*
   description: '',//项目描述 string(1-200;不包含特殊字符)
   customer: '',//客户ID string|number*
-  patent: [],//关联专利ID数组 array
-  copyright: [],//关联版权ID数组 array
-  trademark: [],//关联商标ID数组 array
+  patent: [],//关联专利名称数组 array(input框输入;不能重复;1-50;不含特殊字符)
+  copyright: [],//关联版权名称数组 array
+  trademark: [],//关联商标名称数组 array
 }
 ```
 - #### 编辑项目
   - url: '/project'
   - type: 'PUT'
-  - params: 同新建，customer不可变更
+  - params: 编辑名称和描述
 - #### 删除项目
   - url: '/project'
   - type: 'DELETE'
@@ -29,4 +29,24 @@
 }
 ```
 - #### 获取项目列表
+  - url: '/project'
+  - type: 'GET'
+  - params: 
+  ``` javascript
+  {
+    page: '',
+    listRows: '',
+  }
+  ```
+  -response:
+  ``` javascript
+  {
+    name: '',
+    description: '',
+    customer: '',
+    patent: [],
+    copyright: [],
+    trademark: [],
+  }
+  ```
 
