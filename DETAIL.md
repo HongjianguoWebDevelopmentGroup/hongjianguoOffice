@@ -46,7 +46,7 @@
     customer: '',
     patent: [],
     copyright: [],
-    trademark: [],
+    trademark: [],\\
   }
   ```
 
