@@ -31,7 +31,7 @@
 - #### 获取项目列表
   - url: '/project'
   - type: 'GET'
-  - params: 
+  - params: 
   ``` javascript
   {
     page: '',
