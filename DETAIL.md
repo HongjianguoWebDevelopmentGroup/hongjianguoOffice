@@ -18,7 +18,7 @@
 - #### 编辑项目
   - url: '/project'
   - type: 'PUT'
-  - params: 编辑名称和描述
+  - params: 编辑名称和描述
 - #### 删除项目
   - url: '/project'
   - type: 'DELETE'
