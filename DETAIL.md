@@ -96,8 +96,8 @@
   - params:
 ```javascript
 {
-  number: '', //string* 合同编号啊啊啊
-  customer: '', //number* 相关客户啊啊啊啊
+  number: '', //string* 合同编号
+  customer: '', //number* 相关客户
   date: '', //string* 签订日期
   agency: '', //number* 代理所
   remark: '', //string (1-50;不包含特殊字符) 备注
