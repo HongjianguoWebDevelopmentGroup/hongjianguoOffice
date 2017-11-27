@@ -129,7 +129,7 @@
   number: '', //string* 合同编号
   customer: '', //number* 相关客户
   date: '', //string* 签订日期
-  agency: '', //number* 代理所
+  agency: '', //number* 分所
   remark: '', //string (1-50;不包含特殊字符) 备注
   file: '', //number* 扫描件
 }
@@ -137,3 +137,26 @@
 #### 编辑合同
 #### 删除合同
 #### 获取合同列表
+- url: '/contract'
+- type: 'GET'
+- params:
+```javascript
+{
+  page: '',
+  listRows: '',
+}
+```
+- response:
+```javascript
+{
+  number: '', //合同编号
+  customer: '', //相关客户
+  agency: {id: '', name: ''}, //分所
+  date: '', //签订日期
+  up_member: '', //上传用户
+  up_date: '', //上传日期
+  status: '', //状态
+  file: {}, //扫描文件(点击下载)
+  remark: '', //备注
+}
+```
