@@ -74,7 +74,18 @@
 }
 ```
 #### 删除客户
+- url: '/customer'
+- type: 'DELETE'
+- params:
+```javascript
+{
+  id: [], 待删除的客户ID数组
+}
+```
 #### 编辑客户
+- url: '/customer/:id'
+- type: 'PUT'
+- params: (同添加)
 #### 获取客户列表
 - url: '/customer'
 - type: 'GET'
@@ -109,6 +120,14 @@
 }
 ```
 #### 删除客户要求
+- url: '/requirement'
+- type: 'DELETE'
+- params:
+```javascript
+{
+  id: [], //待删除的客户要求ID数组
+}
+```
 #### 编辑客户要求
 #### 获取客户要求列表
 - url: '/requirement'
