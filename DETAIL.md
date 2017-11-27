@@ -72,6 +72,26 @@
 - #### 删除客户
 - #### 编辑客户
 - #### 获取客户列表
+  - url: '/customer'
+  - type: 'GET'
+  - params:
+```javascript
+{
+  page: '',
+  listRows: '',
+}
+```
+  - response:
+```javascript
+{
+  name: '', //客户名称
+  province: '', //省份
+  city: '', //城市
+  contact: '', //联系人
+  email: '', //电子邮箱
+  number: '', //案件数
+}
+```
 - #### 获取报价列表
 - #### 修改报价
 - #### 添加客户要求
