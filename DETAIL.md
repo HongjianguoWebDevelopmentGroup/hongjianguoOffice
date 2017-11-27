@@ -111,6 +111,25 @@
 #### 删除客户要求
 #### 编辑客户要求
 #### 获取客户要求列表
+- url: '/requirement'
+- type: 'POST'
+- params: 
+```javascript
+{
+  customer: '',//客户ID
+}
+```
+- response: 
+```javascript
+{
+  id: '',
+  index: '', //编号(前台计算)
+  type: '', //案件类型
+  date: '', //备注日期
+  member: '', //备注用户
+  content: '', //要求内容
+}
+```
 
 申请人管理（同企业版）
 --------------------------
