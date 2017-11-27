@@ -66,7 +66,7 @@
     cell_phone: '',//手机号码 string (手机号码验证规则)
     email: '',//电子邮箱 string (邮箱验证规则)
     qq: '',//QQ string (qq验证规则)
-    wechat: '',微信 string
+    wechat: '',//微信 string
   }
   ```
 - #### 删除客户
