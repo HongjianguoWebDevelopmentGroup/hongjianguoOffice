@@ -50,38 +50,43 @@
   }
   ```
 ### 客户信息管理
-- ### 新建客户
+- #### 新建客户
   - url: '/customer'
   - type: 'POST'
   - params: 
   ```javascript
   {
-    area: '',//客户国际 string (地区列表的KEY)*
-    name: '',//客户名称 string (1-10;不包含特殊字符)*
-    en_name: '',/英文名称 string (1-10;不包含特殊字符)
-    pro_city: [],//省份及城市 array (states.json中的数据)
-    address: '',//详细地址 string (1-200;不包含特殊字符)
-    en_address: '',//英文地址 string (1-200;不包含特殊字符)
-    contact: '',//联系人 string (1-10;不包含特殊字符)
-    cell_phone: '',//手机号码 string (手机号码验证规则)
-    email: '',//电子邮箱 string (邮箱验证规则)
-    qq: '',//QQ string (qq验证规则)
-    wechat: '',微信 string
-  }
+    area: '',//客户国籍 string (地区列表的KEY)*
+    name: '',//客户名称 string (1-10;不包含特殊字符)*
+    en_name: '',/英文名称 string (1-10;不包含特殊字符)
+    pro_city: [],//省份及城市 array (states.json中的数据)
+    address: '',//详细地址 string (1-200;不包含特殊字符)
+    en_address: '',//英文地址 string (1-200;不包含特殊字符)
+    contact: '',//联系人 string (1-10;不包含特殊字符)
+    cell_phone: '',//手机号码 string (手机号码验证规则)
+    email: '',//电子邮箱 string (邮箱验证规则)
+    qq: '',//QQ string (qq验证规则)
+    wechat: '',微信 string
+  }
   ```
-- ### 删除客户
-- ### 编辑客户
-- ### 获取客户列表
-- ### 获取报价列表
-- ### 修改报价
-- ### 添加客户要求
-  - url: '/requirement'
+- #### 删除客户
+- #### 编辑客户
+- #### 获取客户列表
+- #### 获取报价列表
+- #### 修改报价
+- #### 添加客户要求
+  - url: '/requirement'
   - type: 'POST'
   - params:
-  ```java
-- ### 删除客户要求
-- ### 编辑客户要求
-- ### 获取客户要求列表
+  ```javascript
+  {
+    type: '',//案件类型 string (案件类型列表的KEY)*
+    content: '',//客户要求 string (1-500;不包含特殊字符)*
+  }
+  ```
+- #### 删除客户要求
+- #### 编辑客户要求
+- #### 获取客户要求列表
 
 
 
