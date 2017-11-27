@@ -3,7 +3,7 @@
 
 项目管理
 ---------------------
-### 新建项目
+#### 新建项目
 - url: '/project'
 - type: 'POST'
 - params: 
@@ -54,70 +54,76 @@
 
 客户信息管理
 -----------------------
-- #### 新建客户
-  - url: '/customer'
-  - type: 'POST'
-  - params: 
-  ```javascript
-  {
-    area: '',//客户国籍 string (地区列表的KEY)*
-    name: '',//客户名称 string (1-10;不包含特殊字符)*
-    en_name: '',//英文名称 string (1-10;不包含特殊字符)
-    pro_city: [],//省份及城市 array (states.json中的数据)
-    address: '',//详细地址 string (1-200;不包含特殊字符)
-    en_address: '',//英文地址 string (1-200;不包含特殊字符)
-    contact: '',//联系人 string (1-10;不包含特殊字符)
-    cell_phone: '',//手机号码 string (手机号码验证规则)
-    email: '',//电子邮箱 string (邮箱验证规则)
-    qq: '',//QQ string (qq验证规则)
-    wechat: '',//微信 string
-  }
-  ```
-- #### 删除客户
-- #### 编辑客户
-- #### 获取客户列表
-  - url: '/customer'
-  - type: 'GET'
-  - params:
-  ```javascript
-  {
-    page: '',
-    listRows: '',
-  }
-  ```
-  - response:
-  ```javascript
-  {
-    name: '', //客户名称
-    province: '', //省份
-    city: '', //城市
-    contact: '', //联系人
-    email: '', //电子邮箱
-    number: '', //案件数
-  }
-  ``` 
-- #### 获取报价列表
-- #### 修改报价
-- #### 添加客户要求
-  - url: '/requirement'
-  - type: 'POST'
-  - params:
-  ```javascript
-  {
-    type: '',//案件类型 string (案件类型列表的KEY)*
-    content: '',//客户要求 string (1-500;不包含特殊字符)*
-  }
-  ```
-- #### 删除客户要求
-- #### 编辑客户要求
-- #### 获取客户要求列表
-### 申请人管理（同企业版）
+#### 新建客户
+- url: '/customer'
+- type: 'POST'
+- params: 
+```javascript
+{
+  area: '',//客户国籍 string (地区列表的KEY)*
+  name: '',//客户名称 string (1-10;不包含特殊字符)*
+  en_name: '',//英文名称 string (1-10;不包含特殊字符)
+  pro_city: [],//省份及城市 array (states.json中的数据)
+  address: '',//详细地址 string (1-200;不包含特殊字符)
+  en_address: '',//英文地址 string (1-200;不包含特殊字符)
+  contact: '',//联系人 string (1-10;不包含特殊字符)
+  cell_phone: '',//手机号码 string (手机号码验证规则)
+  email: '',//电子邮箱 string (邮箱验证规则)
+  qq: '',//QQ string (qq验证规则)
+  wechat: '',//微信 string
+}
+```
+#### 删除客户
+#### 编辑客户
+#### 获取客户列表
+- url: '/customer'
+- type: 'GET'
+- params:
+```javascript
+{
+  page: '',
+  listRows: '',
+}
+```
+- response:
+```javascript
+{
+  name: '', //客户名称
+  province: '', //省份
+  city: '', //城市
+  contact: '', //联系人
+  email: '', //电子邮箱
+  number: '', //案件数
+}
+``` 
+#### 获取报价列表
+#### 修改报价
+#### 添加客户要求
+- url: '/requirement'
+- type: 'POST'
+- params:
+```javascript
+{
+  type: '',//案件类型 string (案件类型列表的KEY)*
+  content: '',//客户要求 string (1-500;不包含特殊字符)*
+}
+```
+#### 删除客户要求
+#### 编辑客户要求
+#### 获取客户要求列表
+
+申请人管理（同企业版）
+--------------------------
+
 ### 发明人管理（同企业版）
+--------------------------
+
 ### 合同管理
-- #### 新增合同
-  - url: '/contract'
-  - type: 'POST'
-  - params:
+--------------------------
+#### 新增合同
+- url: '/contract'
+- type: 'POST'
+- params:
 ```javascript
 {
   number: '', //string* 合同编号
@@ -128,6 +134,6 @@
   file: '', //number* 扫描件
 }
 ```
-- #### 编辑合同
-- #### 删除合同
-- #### 获取合同列表
+#### 编辑合同
+#### 删除合同
+#### 获取合同列表
