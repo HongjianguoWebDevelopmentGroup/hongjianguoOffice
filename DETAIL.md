@@ -1,55 +1,59 @@
 红坚果事务所版详细设计
 =====================
-### 项目管理
-- #### 新建项目
-  - url: '/project'
-  - type: 'POST'
-  - params: 
-  ``` javascript
-  {
-    name: '',//项目名称 string(1-50;不包含特殊字符)*
-    description: '',//项目描述 string(1-200;不包含特殊字符)
-    customer: '',//客户ID string|number*
-    patent: [],//关联专利名称数组 array(input框输入;不能重复;1-50;不含特殊字符)
-    copyright: [],//关联版权名称数组 array
-    trademark: [],//关联商标名称数组 array
-  }
-  ```
-- #### 编辑项目
-  - url: '/project'
-  - type: 'PUT'
-  - params: 编辑名称和描述
-- #### 删除项目
-  - url: '/project'
-  - type: 'DELETE'
-  - params: 
-  ``` javascript
-  {
-    id: [],//待删除的项目ID数组 array
-  }
-  ```
-- #### 获取项目列表
-  - url: '/project'
-  - type: 'GET'
-  - params: 
-  ``` javascript
-  {
-    page: '',
-    listRows: '',
-  }
-  ```
-  - response:
-  ``` javascript
-  {
-    name: '',
-    description: '',
-    customer: '',
-    patent: [],
-    copyright: [],
-    trademark: [],
-  }
-  ```
-### 客户信息管理
+
+项目管理
+---------------------
+#### 新建项目
+- url: '/project'
+- type: 'POST'
+- params: 
+``` javascript
+{
+  name: '',//项目名称 string(1-50;不包含特殊字符)*
+  description: '',//项目描述 string(1-200;不包含特殊字符)
+  customer: '',//客户ID string|number*
+  patent: [],//关联专利名称数组 array(input框输入;不能重复;1-50;不含特殊字符)
+  copyright: [],//关联版权名称数组 array
+  trademark: [],//关联商标名称数组 array
+}
+```
+#### 编辑项目
+- url: '/project'
+- type: 'PUT'
+- params: 编辑名称和描述
+#### 删除项目
+- url: '/project'
+- type: 'DELETE'
+- params: 
+``` javascript
+{
+  id: [],//待删除的项目ID数组 array
+}
+```
+#### 获取项目列表
+- url: '/project'
+- type: 'GET'
+- params: 
+``` javascript
+{
+  page: '',
+  listRows: '',
+}
+```
+- response:
+``` javascript
+{
+  name: '',
+  description: '',
+  customer: '',
+  patent: [],
+  copyright: [],
+  trademark: [],
+}
+```
+
+客户信息管理
+-----------------------
 - #### 新建客户
   - url: '/customer'
   - type: 'POST'
@@ -75,23 +79,23 @@
   - url: '/customer'
   - type: 'GET'
   - params:
-```javascript
-{
-  page: '',
-  listRows: '',
-}
-```
+  ```javascript
+  {
+    page: '',
+    listRows: '',
+  }
+  ```
   - response:
-```javascript
-{
-  name: '', //客户名称
-  province: '', //省份
-  city: '', //城市
-  contact: '', //联系人
-  email: '', //电子邮箱
-  number: '', //案件数
-}
-```
+  ```javascript
+  {
+    name: '', //客户名称
+    province: '', //省份
+    city: '', //城市
+    contact: '', //联系人
+    email: '', //电子邮箱
+    number: '', //案件数
+  }
+  ``` 
 - #### 获取报价列表
 - #### 修改报价
 - #### 添加客户要求
