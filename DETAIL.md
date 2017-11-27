@@ -89,3 +89,18 @@
 - #### 获取客户要求列表
 ### 申请人管理（同企业版）
 ### 发明人管理（同企业版）
+### 合同管理
+- #### 新增合同
+  - url: '/contract'
+  - type: 'POST'
+  - params:
+```javascript
+{
+ number: '', //string* 合同编号啊啊啊
+ customer: '', //number* 相关客户啊啊啊啊
+ date: '', //string* 签订日期
+ agency: '', //number* 代理所
+ remark: '', //string (1-50;不包含特殊字符) 备注
+ file: '', //number* 扫描件
+}
+```
