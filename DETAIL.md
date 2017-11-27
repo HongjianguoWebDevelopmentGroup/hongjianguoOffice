@@ -58,7 +58,7 @@
   {
     area: '',//客户国籍 string (地区列表的KEY)*
     name: '',//客户名称 string (1-10;不包含特殊字符)*
-    en_name: '',/英文名称 string (1-10;不包含特殊字符)
+    en_name: '',//英文名称 string (1-10;不包含特殊字符)
     pro_city: [],//省份及城市 array (states.json中的数据)
     address: '',//详细地址 string (1-200;不包含特殊字符)
     en_address: '',//英文地址 string (1-200;不包含特殊字符)
@@ -80,8 +80,8 @@
   - params:
   ```javascript
   {
-    type: '',//案件类型 string (案件类型列表的KEY)*
-    content: '',//客户要求 string (1-500;不包含特殊字符)*
+    type: '',//案件类型 string (案件类型列表的KEY)*
+    content: '',//客户要求 string (1-500;不包含特殊字符)*
   }
   ```
 - #### 删除客户要求
