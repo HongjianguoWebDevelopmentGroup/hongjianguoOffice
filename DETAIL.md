@@ -61,8 +61,8 @@
 ```javascript
 {
   area: '',//客户国籍 string (地区列表的KEY)*
-  name: '',//客户名称 string (1-10;不包含特殊字符)*
-  en_name: '',//英文名称 string (1-10;不包含特殊字符)
+  name: '',//客户名称 string (1-50;不包含特殊字符)*
+  en_name: '',//英文名称 string (1-50;不包含特殊字符)
   province: '', //省份 int (states.json中的数据)
   city: '', //城市 int (states.json中的数据)
   address: '',//详细地址 string (1-200;不包含特殊字符)
