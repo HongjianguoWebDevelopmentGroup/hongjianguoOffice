@@ -101,7 +101,8 @@
 - response:
 ```javascript
 {
-  name: '', //客户名称
+  area: '', //地区
+  name: '', //客户名称
   en_name: '', //英文名称
   province: '', //省份
   city: '', //城市
