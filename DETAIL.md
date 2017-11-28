@@ -4,7 +4,7 @@
 项目管理
 ---------------------
 #### 新建项目
-- url: '/project'
+- url: '/projects'
 - type: 'POST'
 - params: 
 ``` javascript
@@ -18,7 +18,7 @@
 }
 ```
 #### 编辑项目
-- url: '/project'
+- url: '/projects'
 - type: 'PUT'
 - params: 编辑名称和描述
 #### 删除项目
@@ -31,7 +31,7 @@
 }
 ```
 #### 获取项目列表
-- url: '/project'
+- url: '/projects'
 - type: 'GET'
 - params: 
 ``` javascript
@@ -55,7 +55,7 @@
 客户信息管理
 -----------------------
 #### 新建客户
-- url: '/customer'
+- url: '/customers'
 - type: 'POST'
 - params: 
 ```javascript
@@ -75,7 +75,7 @@
 }
 ```
 #### 删除客户
-- url: '/customer'
+- url: '/customers'
 - type: 'DELETE'
 - params:
 ```javascript
@@ -84,11 +84,11 @@
 }
 ```
 #### 编辑客户
-- url: '/customer/:id'
+- url: '/customers/:id'
 - type: 'PUT'
 - params: (同添加)
 #### 获取客户列表
-- url: '/customer'
+- url: '/customers'
 - type: 'GET'
 - params:
 ```javascript
@@ -111,7 +111,7 @@
 #### 获取报价列表
 #### 修改报价
 #### 添加客户要求
-- url: '/requirement'
+- url: '/requirements'
 - type: 'POST'
 - params:
 ```javascript
@@ -121,7 +121,7 @@
 }
 ```
 #### 删除客户要求
-- url: '/requirement'
+- url: '/requirements'
 - type: 'DELETE'
 - params:
 ```javascript
@@ -131,7 +131,7 @@
 ```
 #### 编辑客户要求
 #### 获取客户要求列表
-- url: '/requirement'
+- url: '/requirements'
 - type: 'POST'
 - params: 
 ```javascript
@@ -160,7 +160,7 @@
 合同管理
 --------------------------
 #### 新增合同
-- url: '/contract'
+- url: '/contracts'
 - type: 'POST'
 - params:
 ```javascript
@@ -176,7 +176,7 @@
 #### 编辑合同
 #### 删除合同
 #### 获取合同列表
-- url: '/contract'
+- url: '/contracts'
 - type: 'GET'
 - params:
 ```javascript
