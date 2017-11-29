@@ -108,7 +108,7 @@
   city: '', //城市
   contact: '', //联系人
   email: '', //电子邮箱
-  number: '', //案件数
+  project_count: '', //案件数
 }
 ``` 
 #### 获取报价列表
