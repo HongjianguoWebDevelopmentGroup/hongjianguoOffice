@@ -139,7 +139,7 @@
 - params: 
 ```javascript
 {
-  customer: '',//客户ID
+  customer_id: '',//客户ID
 }
 ```
 - response: 
