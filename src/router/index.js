@@ -16,6 +16,7 @@ const TrademarkList            = () => import('@/components/page/TrademarkList')
 const TrademarkAdd             = () => import('@/components/page/TrademarkAdd')
 const TrademarkNotice          = () => import('@/components/page/TrademarkNotice')
 const TrademarkStatistics      = () => import('@/components/page/TrademarkStatistics')
+const ClientList               = () => import('@/components/page/ClientList')
 const CopyrightList            = () => import('@/components/page/CopyrightList')
 const CopyrightAdd             = () => import('@/components/page/CopyrightAdd')
 const UserList                 = () => import('@/components/page/UserList')
@@ -170,6 +171,11 @@ const router = new Router({
       path:'/trademark/statistics',
       name: 'TrademarkStatistics',
       component: TrademarkStatistics
+    },
+    {
+      path: '/client/list',
+      name: 'ClientList',
+      component: ClientList
     },
     {
       path: '/copyright/add',

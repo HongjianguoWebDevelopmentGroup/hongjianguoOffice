@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
-	"analyz": "set NODE_ENV=production && set npm_config_report=true && npm run build"
+    "analyz": "set NODE_ENV=production && set npm_config_report=true && npm run build"
   },
   "dependencies": {
     "axios": "^0.17.0",
@@ -43,7 +43,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.3.0",

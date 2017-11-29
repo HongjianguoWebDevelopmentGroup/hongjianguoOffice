@@ -162,6 +162,19 @@ menu.data = [
 			}]
 	},
 	{
+		text: '客户',
+		path: '/client',
+		icon: 'iconfont	 icon-task',
+		type: 'submenu',
+		children: [
+			{
+				text: '客户管理',
+				icon: '',
+				path: '/client/list',
+				type: 'item',
+			}]
+	},
+	{
 		text: '费用',
 		path: '/fee',
 		icon: 'iconfont icon-fee',

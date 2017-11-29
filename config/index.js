@@ -29,6 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: { 
         '/api': { 
+            // target: 'hjglf2.hongjianguo.com',
             target: 'http://www.zhiq.wang', 
             changeOrigin: true, 
             pathRewrite: { 
