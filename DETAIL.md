@@ -121,6 +121,7 @@
 {
   type: '',//案件类型 string (案件类型列表的KEY)*
   content: '',//客户要求 string (1-500;不包含特殊字符)*
+  customer_id: '' //客户ID int*
 }
 ```
 #### 删除客户要求
