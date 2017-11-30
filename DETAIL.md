@@ -172,7 +172,7 @@
   customer: '', //number* 相关客户
   date: '', //string* 签订日期
   agency: '', //number* 分所
-  remark: '', //string (1-50;不包含特殊字符) 备注
+  remark: '', //string (1-500;不包含特殊字符) 备注
   file: '', //number* 扫描件
 }
 ```
