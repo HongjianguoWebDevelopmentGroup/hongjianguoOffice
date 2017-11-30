@@ -186,7 +186,7 @@
 {
   page: '',
   listRows: '',
-  keyword: '',placeholder: '编号/客户/分所/上传用户'
+  keyword: '', //placeholder: '编号/客户/分所/上传用户'
 }
 ```
 - response:
