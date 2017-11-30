@@ -192,7 +192,7 @@
 ```javascript
 {
   number: '', //合同编号
-  customer: '', //相关客户
+  customer: {id: '', name: ''}, //相关客户
   agency: {id: '', name: ''}, //分所
   date: '', //签订日期
   up_member: '', //上传用户
