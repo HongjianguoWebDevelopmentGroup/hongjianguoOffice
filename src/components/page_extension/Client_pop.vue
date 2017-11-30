@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :key="popType" top="2%" :title="popType == 'add' ? '添加用户' : '编辑用户'" :visible.sync="dialogVisible" @close="close">
+  <el-dialog :key="popType" top="2%" :title="dialogTitle" :visible.sync="dialogVisible" @close="close">
     <el-form :model="form" label-width="100px" ref="form" :rules="rules">
       
       <el-form-item label="客户国籍" prop="area">
@@ -79,6 +79,18 @@ export default {
         wechat: ''
       },
       'rules': {
+        'area': { required: true, message: '客户国籍不能为空', trigger: 'change'},
+        'name': [{ required: true, message: '客户名称不能为空', trigger: 'blur'},
+                 { min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
+                 { pattern: /^[^~!@#$%^&*]+$/, message: '客户名不能包含非法字符', trigger: 'blur' }],
+        'en_name': [{ min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
+                    { pattern: /^[^~!@#$%^&*]+$/, message: '客户英文名不能包含非法字符', trigger: 'blur' }],
+        'address': [{ min: 1, max: 200, message: '长度不超过200个字符', trigger: 'blur'},
+                    { pattern: /^[^~!@#$%^&*]+$/, message: '地址不能包含非法字符', trigger: 'blur' }],
+        'en_address': [{ min: 1, max: 200, message: '长度不超过200个字符', trigger: 'blur'},
+                    { pattern: /^[^~!@#$%^&*]+$/, message: '英文地址不能包含非法字符', trigger: 'blur' }],
+        'contact': [{ min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur'},
+                    { pattern: /^[^~!@#$%^&*]+$/, message: '联系人不能包含非法字符', trigger: 'blur' }],
         'email': { pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, message: '邮箱格式错误', trigger: 'blur' },
         'cell_phone': { pattern: /(^[0-9]{3,4}\-[0-9]{7,8})$|(^[0-9]{3,4}\-[0-9]{7,8})(-\d{1,6}?$)|^1[3|4|5|7|8][0-9]{9}$/, message: '手机号码或者座机号码格式错误', trigger: 'blur'},
         'qq': { pattern: /^[1-9][0-9]{4,9}$/, message: 'qq号码格式错误', trigger: 'blur,change'},
@@ -89,7 +101,7 @@ export default {
   },
   computed: {
     dialogTitle () {
-      return this.popType == 'add' ? '添加用户' : '编辑用户';
+      return this.popType == 'add' ? '添加客户' : '编辑客户';
     },
   },
   methods: {

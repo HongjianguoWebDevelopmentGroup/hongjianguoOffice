@@ -172,7 +172,26 @@ menu.data = [
 				icon: '',
 				path: '/client/list',
 				type: 'item',
-			}]
+			},
+			{
+				text: '合同管理',
+				icon: '',
+				path: '/client/contract',
+				type: 'item',
+			},
+			{
+			text: '申请人管理',
+			path: '/applicantList',
+			icon: '',
+			type: 'item',
+		},
+		{ 
+			text: '发明人管理',
+			path: '/inventorList',
+			icon: '',
+			type: 'item',
+		},
+		]
 	},
 	{
 		text: '费用',
@@ -227,18 +246,6 @@ menu.data = [
 		{
 			text: '用户管理',
 			path: '/userList',
-			icon: '',
-			type: 'item',
-		},
-		{
-			text: '申请人管理',
-			path: '/applicantList',
-			icon: '',
-			type: 'item',
-		},
-		{ 
-			text: '发明人管理',
-			path: '/inventorList',
 			icon: '',
 			type: 'item',
 		},
