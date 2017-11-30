@@ -1,7 +1,7 @@
 <template>
 	<div class="clientList">
-		<table-component :tableOption="tableOption" :data="tabelData" @refreshTableData="refreshTableData"></table-component>
-		<client-pop ref="ClientPop"></client-pop>
+		<table-component :tableOption="tableOption" :data="tabelData" ref="table" @refreshTableData="refreshTableData"></table-component>
+		<client-pop ref="ClientPop" :popType="popType" @refresh="refresh"></client-pop>
 	</div>
 </template>
 <script>
@@ -15,6 +15,7 @@ export default {
   // mixins: [ AxiosMixins ],
   data () {
 	return {
+	  popType: '',	
 	  tableOption: {
 	  	'name': 'clientList',
 	  	// 'url': URL,
@@ -49,6 +50,7 @@ export default {
 	  },
 	  tabelData: [
 	  	{
+	  		id: 1,
 	  		area: "CN",
 	  		name: "文浩",
 	  		en_name: "kevin",
@@ -59,6 +61,7 @@ export default {
 	  		project_count: "1542"	
 	  	},
 	  	{
+	  		id: 2,
 	  		area: "CN",
 	  		name: "谢文浩",
 	  		en_name: "kevin",
@@ -92,9 +95,12 @@ export default {
   		})
   	},
   	addPop () {
+  		this.popType = "add";
   		this.$refs.ClientPop.show('add');
   	},
   	editPop (row) {
+  		this.popType = "edit";
+  		console.log(row);
   		this.$refs.ClientPop.show('edit',row);
   	},
    	deleteSingle ({id}) {
@@ -115,7 +121,13 @@ export default {
   		if(!this.shrinkVisible) {
   			this.shrinkVisible = true;	
   		}
-  	}
+  	},
+  	refresh () {
+  		this.$refs.table.refresh();
+  	},
+  	update () {
+  		this.$refs.table.update();
+  	},
   },
   components:{
 	TableComponent,

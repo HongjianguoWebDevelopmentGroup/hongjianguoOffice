@@ -6,23 +6,23 @@
         <static-select type="area" v-model="form.area"></static-select>
       </el-form-item>
 
-      <el-form-item label="客户名称" prop="name" v-if="popType == 'add'">
+      <el-form-item label="客户名称" prop="name">
         <el-input v-model="form.name" ></el-input>
       </el-form-item>
-      <el-form-item label="英文名字" prop="en_name" v-if="popType == 'edit'">
+      <el-form-item label="英文名字" prop="en_name" >
         <el-input v-model="form.en_name" ></el-input>
       </el-form-item>
-      <el-form-item label="省份" prop="province">
-        <city v-model="form.province"></city>
+      <el-form-item label="省份" prop="province_city">
+        <city v-model="form.province_city"></city>
       </el-form-item>      
       <el-form-item label="详细地址" prop="address">
-        <el-input type="textarea"></el-input>
+        <el-input type="textarea" v-model="form.address"></el-input>
       </el-form-item>
       <el-form-item label="英文地址" prop="en_address">
-        <el-input type="textarea"></el-input>
+        <el-input type="textarea" v-model="form.en_address"></el-input>
       </el-form-item>
       <el-form-item label="联系人" prop="contact">
-        <el-input></el-input>
+        <el-input v-model="form.contact"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="form.email"></el-input>  
@@ -47,34 +47,29 @@
 </template>
 
 <script>
-import UserRole from '@/components/form/UserRole'
 import AxiosMixins from '@/mixins/axios-mixins'
-import EditPassword from '@/components/form/EditPassword'
+import PopMixins from '@/mixins/pop-mixins'
 import RemoteSelect from '@/components/form/RemoteSelect'
 import StaticSelect from '@/components/form/StaticSelect'
 import City from '@/components/form/City'
 
-const URL = 'api/members'
 
 export default {
   name: 'userListPop',
-  mixins: [ AxiosMixins ],
+  mixins: [ AxiosMixins,PopMixins ],
   props: {
     'popType': {
       type: String, 
       default: 'add',
     },
-    'group': null,
   },
   data () {
     return {
-      'id': '',
       form: {
         area: '',
         name: '',
         en_name: '',
-        province: [],
-        city: '',
+        province_city: [],
         address: '',
         en_address: '',
         contact: '',
@@ -98,65 +93,32 @@ export default {
     },
   },
   methods: {
-    show (row) {
-      this.dialogVisible = true;
-      
-      // console.log("----------------------------------")
-      // console.log(this.$refs.form.fields);
-/*      this.$nextTick(()=>{
-      // console.log(this.$refs.form.fields);
-      // console.log("------------------------------------")
-        if(this.$refs.form) {
-          this.$refs.form.resetFields();
-          this.form.username = "";
-          this.form.password = "";
-          this.form.password_again = "";
-          this.form.name = "";
-          this.form.email = "";
-          this.form.mobile = "";
-          this.form.weixin = "";
-          this.form.qq = "";
-        } 
-        if(this.popType == 'add') {
-          this.form.group_id = this.group && this.group.id ? this.group.id : '';
+    setForm (data) {
+      for(let k in this.form) {
+        const d = data[k];
+        if(k == 'province_city') {
+          let arr = [];
+          arr[0] = Number.parseInt(data['province']);
+          arr[1] = Number.parseInt(data['city']);
+          console.log(arr);
+          this.form[k] = arr;
+        }else {
+          this.form[k] = d;
         }
-
-        if(this.popType == 'edit') {
-          this.$tool.coverObj(this.form, row); 
-          this.id = row.id;
+      }
+    },
+    submitForm () {
+      const o = {};
+      for(let k in this.form) {
+        const d = this.form[k];
+        if(k == 'province_city') {
+          o.province = d[0] ? d[0] : '';
+          o.city = d[1] ? d[1] : '';
+        }else {
+          o[k] = d;
         }
-          
-      });*/
-    },
-    add () {
-      let flag = false;
-      this.$refs.form.validate(_=>{ flag = !_ });
-      if( flag || this.psdCheck() ) return;
-
-      const url = URL;
-      const data = this.form;
-      const success = _=>{
-        this.$message({message: '添加用户成功', type: 'success'});
-        this.dialogVisible = false;
-        this.$emit('refresh');
       }
-
-      this.axiosPost({url, data, success});
-    },
-    edit () {
-      let flag = false;
-      this.$refs.form.validate(_=>{ flag = !_ })
-      if( flag || this.$refs.psd.check() ) return;
-
-      const url = `${URL}/${this.id}`;
-      const data = this.$tool.shallowCopy(this.form, {skip: ['group_id']});
-      const success = _=>{
-        this.$message({message: '编辑用户成功', type: 'success'});
-        this.dialogVisible = false;
-        this.$emit('refresh');
-      }
-
-      this.axiosPut({url, data, success});
+      return o;
     },
     close () {
       if(this.$refs.psd) {
@@ -165,12 +127,11 @@ export default {
     }
   },
   components: { 
-    UserRole,
-    EditPassword,
     RemoteSelect,
     StaticSelect,
     City,
-  }
+  },
+  URL: '/api/customers'
 }
 </script>
 
