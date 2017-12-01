@@ -1,11 +1,12 @@
 <template>
-  <div class="main">
+  <div class="form-city">
   	  <el-cascader
   	  	placeholder="请选择省市"
   	    expand-trigger="hover"
   	    :options="options"
   	    :value=value
   	    :props="props"
+        style="width: 100%;"
   	    @input="handleInput"
   	    clearable
   	   >

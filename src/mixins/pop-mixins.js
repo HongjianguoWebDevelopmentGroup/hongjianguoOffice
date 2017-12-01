@@ -18,9 +18,11 @@ export default {
 	methods: {
 		show ( type='add', data ) {
   		this.type = type;
-      this.dialogVisible = true;
+     
+      this.dialogVisible = true;  
+      
+
      	this.$nextTick(_=>{
-     		console.log(this.type);
         this.$refs.form.resetFields();  
       	
 	      if(type === 'edit'|| type === 'confirm') {
@@ -36,7 +38,9 @@ export default {
   	},
     confirmCallback () {
       this.$message({message:'已确认收文',type:'success'});
-      this.dialogVisible = false;
+      
+      this.dialogVisible = false;  
+      
     },
   	add () {
       const url = this.$options.URL;
@@ -48,7 +52,10 @@ export default {
       
       const success = _=>{
         this.$message({message: `添加${tex}成功`, type: 'success'});
-        this.dialogVisible = false;
+        
+        this.dialogVisible = false;  
+        
+        
         this.$emit('refresh', 'add');
       }
       const complete = _=>{
@@ -71,7 +78,9 @@ export default {
       
       const success = _=>{
         this.$message({message: `编辑${tex}成功`, type: 'success'});
+        
         this.dialogVisible = false;
+        
         this.$emit('refresh', 'edit');
       }
       const complete = _=>{
@@ -84,7 +93,9 @@ export default {
           this.$axiosPut({url, data, success, complete});        
         }
       })
-
+    },
+    clear () {
+      this.$refs.form.resetFields();
     }
 	}
 }
