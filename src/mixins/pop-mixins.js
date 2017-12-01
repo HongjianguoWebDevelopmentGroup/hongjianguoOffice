@@ -23,8 +23,11 @@ export default {
       
 
      	this.$nextTick(_=>{
-        this.$refs.form.resetFields();  
-      	
+
+        setTimeout(()=>{
+             this.$refs.form.resetFields();
+        },100);   	
+
 	      if(type === 'edit'|| type === 'confirm') {
           if(data instanceof Object) {
             const copy = this.$tool.deepCopy(data);
