@@ -74,6 +74,7 @@ const router = new Router({
     { path: '/task', redirect: '/task/pending' },
     { path: '/patent', redirect: '/patent/list' },
     { path: '/trademark', redirect: '/trademark/list' },
+    { path: '/client', redirect: '/client/list' },
     { path: '/copyright', redirect: '/copyright/list' },
     { path: '/news', redirect: '/news/mailList' },
     { path: '/dispatch', redirect: '/dispatch/administration' },
