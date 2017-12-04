@@ -196,8 +196,8 @@
   customer: {id: '', name: ''}, //相关客户
   agency: {id: '', name: ''}, //分所
   date: '', //签订日期
-  up_member: '', //上传用户
-  up_date: '', //上传日期
+  member: '', //上传用户
+  update_time: '', //上传日期
   status: '', //状态
   file: {}, //扫描文件(点击下载)
   remark: '', //备注
