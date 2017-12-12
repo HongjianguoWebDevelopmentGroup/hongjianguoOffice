@@ -35,8 +35,8 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="手机号" prop="cell_phone">
-          <el-input v-model="form.cell_phone"></el-input> 
+        <el-form-item label="手机号" prop="mobile">
+          <el-input v-model="form.mobile"></el-input> 
         </el-form-item>
       </el-col>
     </el-row>  
@@ -47,8 +47,8 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="微信号" prop="wechat">
-          <el-input v-model="form.wechat"></el-input> 
+        <el-form-item label="微信号" prop="weixin">
+          <el-input v-model="form.weixin"></el-input> 
         </el-form-item>
       </el-col>
     </el-row>  
@@ -94,10 +94,10 @@ export default {
         address: '',
         en_address: '',
         contact: '',
-        cell_phone: '',
+        mobile: '',
         email: '',
         qq: '',
-        wechat: ''
+        weixin: ''
       },
       'rules': {
         'area': { required: true, message: '客户国籍不能为空', trigger: 'change'},
@@ -113,7 +113,7 @@ export default {
         'contact': [{ min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur'},
                     { pattern: /^[^~!@#$%^&*]+$/, message: '联系人不能包含非法字符', trigger: 'blur' }],
         'email': { pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, message: '邮箱格式错误', trigger: 'blur' },
-        'cell_phone': { pattern: /(^[0-9]{3,4}\-[0-9]{7,8})$|(^[0-9]{3,4}\-[0-9]{7,8})(-\d{1,6}?$)|^1[3|4|5|7|8][0-9]{9}$/, message: '手机号码或者座机号码格式错误', trigger: 'blur'},
+        'mobile': { pattern: /(^[0-9]{3,4}\-[0-9]{7,8})$|(^[0-9]{3,4}\-[0-9]{7,8})(-\d{1,6}?$)|^1[3|4|5|7|8][0-9]{9}$/, message: '手机号码或者座机号码格式错误', trigger: 'blur'},
         'qq': { pattern: /^[1-9][0-9]{4,9}$/, message: 'qq号码格式错误', trigger: 'blur,change'},
       },
       dialogVisible: false,
@@ -153,7 +153,8 @@ export default {
     StaticSelect,
     City,
   },
-  URL: '/api/customers'
+  URL: '/api/customers',
+  REMINDER_TEXT: '客户',
 }
 </script>
 

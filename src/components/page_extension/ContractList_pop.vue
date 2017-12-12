@@ -1,28 +1,28 @@
 <template>
-  <el-dialog :key="popType" :title="dialogTitle" :visible.sync="dialogVisible" @close="close">
+  <el-dialog :key="popType" :title="title" :visible.sync="dialogVisible" @close="close">
     <el-form :model="form" label-width="100px" ref="form" :rules="rules">
 
       <el-form-item label="合同编号" prop="number">
-        <el-input v-model="form.number" ></el-input>
+        <el-input v-model="form.number"  placeholder="请填写合同编号"></el-input>
       </el-form-item>
       <el-form-item label="相关客户" prop="customer" >
-        <el-input v-model="form.customer" ></el-input>
+        <remote-select type="customer" v-model="form.customer"></remote-select>
       </el-form-item>
       <el-form-item label="签订日期" prop="date">
-      <el-date-picker
-        v-model="form.date"
-        type="date"
-        placeholder="选择日期">
-      </el-date-picker>
+        <el-date-picker
+          v-model="form.date"
+          type="date"
+          placeholder="选择日期">
+        </el-date-picker>
       </el-form-item>      
       <el-form-item label="分所" prop="agency">
-        <el-input  v-model="form.agency"></el-input>
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" v-model="form.remark"></el-input>
+        <remote-select type="agency"  v-model="form.agency"></remote-select>
       </el-form-item>
       <el-form-item label="扫描件" prop="file">
-        <el-input  v-model="form.file"></el-input>
+        <upload :multiple="false" v-model="form.file" :file-list="fileList"></upload>
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input type="textarea" v-model="form.remark" placeholder="请填写备注信息"></el-input>
       </el-form-item>
       <el-form-item style="margin-bottom: 0;">
         <el-button type="primary" @click="add" v-if="popType == 'add'">确定</el-button>
@@ -39,11 +39,12 @@ import PopMixins from '@/mixins/pop-mixins'
 import RemoteSelect from '@/components/form/RemoteSelect'
 import StaticSelect from '@/components/form/StaticSelect'
 import City from '@/components/form/City'
+import Upload from '@/components/form/Upload'
 
 
 export default {
-  name: 'userListPop',
-  mixins: [ AxiosMixins,PopMixins ],
+  name: 'contractListPop',
+  mixins: [ PopMixins ],
   props: {
     'popType': {
       type: String, 
@@ -62,34 +63,40 @@ export default {
       },
       'rules': {
         'number': { required: true, message: '合同不能为空', trigger: 'blur'},
-        'customer': { required: true, message: '相关客户不能为空', trigger: 'blur'},
-        'date': { required: true, message: '签订日期不能为空', trigger: 'blur'},
-        'agency': { required: true, message: '分所不能为空', trigger: 'blur'},
-        'file': { required: true, message: '扫描件不能为空', trigger: 'blur'},
-        'remark': { min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
+        'customer': { required: true, message: '相关客户不能为空', trigger: 'change'},
+        'date': { type: 'date', required: true, message: '签订日期不能为空', trigger: 'change'},
+        'agency': { required: true, message: '分所不能为空', trigger: 'change'},
+        'file': { required: true, message: '扫描件不能为空', trigger: 'change'},
+        'remark': { max: 50, message: '长度不超过50个字符', trigger: 'blur'},
       },
       dialogVisible: false,
       editPsd: false,
+      fileList: [],
     }
   },
-  computed: {
-    dialogTitle () {
-      return this.popType == 'add' ? '添加合同' : '编辑合同';
-    },
-  },
+  computed: {},
   methods: {
+    setForm (data) {
+      data['date'] = new Date(data['date']);
+      this.$tool.coverObj(this.form, data, {skip: ['file']});
+      if(data.file) {
+        this.form.file = data.file.id;
+        this.fileList = [data.file];
+      } 
+    },
     close () {
-      if(this.$refs.psd) {
-        this.$refs.psd.clearEditPsd();
-      }
+      this.clear();
+      this.fileList = [];
     }
   },
   components: { 
     RemoteSelect,
     StaticSelect,
     City,
+    Upload,
   },
-  URL: '/api/contracts'
+  URL: '/api/contracts',
+  REMINDER_TEXT: '合同',
 }
 </script>
 

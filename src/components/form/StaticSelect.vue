@@ -45,6 +45,15 @@ const config = [
       { name: '气味', id: 6},
     ]
   }],
+  ['project_type',{
+    placeholder: '案件类型',
+    options: [
+      {name: '全部', id: ''},
+      {name: '专利', id: 1},
+      {name: '商标', id: 2},
+      {name: '版权', id: 3},
+    ]
+  }],
   ['agency_scope', {
     placeholder: '请选择代理机构业务范围',
     options: [
@@ -69,6 +78,15 @@ const config = [
       { name: '发明+新型', id: 4 },
     ]
   }],
+  ['copyright_type', {
+    placeholder: '请选择版权类型',
+    options: [
+      { name: '计算机软件著作权', id: 1 },
+      { name: '文字作品著作权', id: 2 },
+      { name: '美术作品著作权', id: 3 },
+      { name: '影视作品著作权', id: 4 },
+    ]
+  }],
   ['agency_type', {
     placeholder: '请选择代理类型',
     options: [
@@ -77,17 +95,12 @@ const config = [
       {id:3, name:"复审阶段"},
       {id:4, name:"无效阶段"},
       {id:5, name:"被无效答复"},
-      {id:6,name:"分析"}
+      {id:6, name:"分析"}
     ]
   }],
   ['case_type', {
     placeholder: '请选择案件类型',
-    options: [
-      { id: 0, name: '提案' },
-      { id: 1, name: '专利' },
-      { id: 2, name: '商标' },
-      { id: 3, name: '版权' },
-    ]
+    options: 'caseType',
   }],
   ['file_type', {
     placeholder: '请选择文件类型',

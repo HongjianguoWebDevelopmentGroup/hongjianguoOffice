@@ -101,6 +101,11 @@ const map = new Map([
     PLACEHOLDER: '请输入邮箱',
     dynamicCreate: true,
     defaultFirstOption: true,
+  }],
+  ['customer', {
+    URL: '/api/customers',
+    DATA_KEY: 'customers',
+    PLACEHOLDER: '请输入客户名',
   }]
 ]);
 

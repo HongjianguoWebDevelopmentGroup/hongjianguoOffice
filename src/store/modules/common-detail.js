@@ -84,7 +84,7 @@ const actions = {
           if( d.status ) {
               commit('setDetailData', JSON.parse(JSON.stringify(d[state.type])));
           }else {
-              alert(d.info);
+              // alert(d.info);
           }
           commit('setLoading', false);
           commit('refreshTrueType');

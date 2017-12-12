@@ -162,6 +162,25 @@ menu.data = [
 			}]
 	},
 	{
+		text: '项目',
+		path: '/business',
+		icon: '',
+		type: 'submenu',
+		children: [
+			{
+				text: '新建项目',
+				path: '/business/add',
+				icon: '',
+				type: 'item',
+			},{
+				text: '项目管理',
+				path: '/business/list',
+				icon: '',
+				type: 'item',
+			}
+		]
+	},
+	{
 		text: '客户',
 		path: '/client',
 		icon: 'iconfont	 icon-customer',
@@ -177,6 +196,12 @@ menu.data = [
 				text: '合同管理',
 				icon: 'iconfont icon-contract',
 				path: '/client/contract',
+				type: 'item',
+			},
+			{
+				text: '报价管理',
+				icon: 'iconfont icon-contract',
+				path: '/client/offer',
 				type: 'item',
 			},
 			{

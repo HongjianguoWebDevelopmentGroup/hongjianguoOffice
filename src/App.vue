@@ -578,7 +578,7 @@ nav {
       display: inline-block;
       text-align: center;
       cursor: pointer;
-      position: static; 
+      position: absolute; 
     }
  
 

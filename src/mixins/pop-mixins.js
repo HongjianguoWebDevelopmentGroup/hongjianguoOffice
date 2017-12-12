@@ -24,15 +24,18 @@ export default {
 
      	this.$nextTick(_=>{
 
-        setTimeout(()=>{
-             this.$refs.form.resetFields();
-        },100);   	
+
+        this.$refs.form.resetFields();
+ 	
 
 	      if(type === 'edit'|| type === 'confirm') {
           if(data instanceof Object) {
             const copy = this.$tool.deepCopy(data);
-            this.id = copy.id; 
-            this.setForm ? this.setForm(data) : this.$tool.coverObj(this.form, copy);  
+            this.id = copy.id;
+            this.$nextTick(_=>{
+              this.setForm ? this.setForm(data) : this.$tool.coverObj(this.form, copy);
+            });
+              
           }else if(data instanceof String || data instanceof Number) {
             data -= 0;
           }	        

@@ -5,7 +5,7 @@
 			<client-form @refresh="addRefresh" ref="form"></client-form>
 		</el-dialog>
 		<app-shrink :visible.sync="shrinkVisible" title="客户详情">
-			<detail :row="currentRow"></detail>
+			<detail :row="currentRow" @refresh="editRefresh"></detail>
 		</app-shrink>
 	</div>
 </template>
@@ -26,7 +26,7 @@ export default {
 		  	'url': URL,
 		  	'height': 'default2',
 		  	'highlightCurrentRow': true,
-		  	'search_placeholder': '搜索客户名称、英文名称、联系人',
+		  	'search_placeholder': '客户名称、英文名称、联系人',
 		  	'rowClick': this.handleRowClick,
 		  	'header_btn': [
 		  	   { type: 'add', click: this.addPop},
@@ -45,7 +45,7 @@ export default {
 		  	  { type: 'text', label: '案件数', prop: 'project_count', width: '160'},
 		  	],
 		  },
-		  tableData: [],
+		  tableData: '',
 		  currentRow: '',
 		  shrinkVisible: false,
 		  dialogVisible: false,
@@ -82,6 +82,9 @@ export default {
   		this.dialogVisible = false;
   		this.refresh();
   	},
+    editRefresh () {
+      this.update();
+    },
   	handleRowClick (row) {
   		this.currentRow = row;
   		if(!this.shrinkVisible) {

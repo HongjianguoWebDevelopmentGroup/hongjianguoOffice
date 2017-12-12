@@ -1,4 +1,4 @@
-import Vue from 'vue'
+ import Vue from 'vue'
 import Router from 'vue-router'
 const Home                     = () => import('@/components/page/Home')
 const Proposal                 = () => import('@/components/page/Proposal')
@@ -31,6 +31,9 @@ const MailList                 = () => import('@/components/page/MailList')
 const SystemMessage            = () => import('@/components/page/SystemMessage')
 const SystemMessageDetail      = () => import('@/components/page/SystemMessageDetail')
 const MailAdd                  = () => import('@/components/page/MailAdd')
+const Offer                    = () => import('@/components/page/Offer')
+const BusinessAdd              = () => import('@/components/page/BusinessAdd')
+const BusinessList              = () => import('@/components/page/BusinessList')
 //###################
 const CommonDetail             = () => import('@/components/page/CommonDetail')
 const Babel                    = () => import('@/components/page_extension/CommonDetail_base')
@@ -175,6 +178,16 @@ const router = new Router({
       component: TrademarkStatistics
     },
     {
+      path:'/business/add',
+      name: 'BusinessAdd',
+      component: BusinessAdd,
+    },
+    {
+      path:'/business/list',
+      name: 'BusinessList',
+      component: BusinessList,
+    },
+    {
       path: '/client/list',
       name: 'ClientList',
       component: ClientList
@@ -183,6 +196,11 @@ const router = new Router({
       path: '/client/contract',
       name: 'ContractList',
       component: ContractList
+    },
+    {
+      path: '/client/offer',
+      name: 'Offer',
+      component: Offer,
     },
     {
       path: '/copyright/add',

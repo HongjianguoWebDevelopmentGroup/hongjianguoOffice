@@ -14,7 +14,11 @@ const URLDEFAULT = '';
 
 const dd = {};
 
-const successFunc = function (d, t) {}
+const successFunc = function (d, t) {
+  if(d.info) {
+    t.$message({message: d.info, type: 'success'});
+  }
+}
 
 const errorFunc = function (d, t) {
   if(d.info) {

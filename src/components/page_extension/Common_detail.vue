@@ -1,5 +1,5 @@
 <template>
-  <app-shrink :title="title" :visible=visibleAuth @update:visible="handleVisible">
+  <app-shrink :title="title" :visible="visibleAuth" @update:visible="handleVisible">
     <span slot="header" style="float: right">
       <el-button size="small" type="primary" @click="edit">保存</el-button>
     </span>

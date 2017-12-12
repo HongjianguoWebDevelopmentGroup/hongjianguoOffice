@@ -36,6 +36,12 @@ const store = new Vuex.Store({
     leftNavVisible: true,
     agencyLoadVisible: false,
     importLoading: false,
+    case_type: [
+      { id: 0, name: '提案' },
+      { id: 1, name: '专利' },
+      { id: 2, name: '商标' },
+      { id: 3, name: '版权' },
+    ],
   },
   modules: {
     filter,
@@ -68,6 +74,14 @@ const store = new Vuex.Store({
     leftVisible: state=>state.leftNavVisible,
     agencyLoadVisible: state=>state.agencyLoadVisible,
     importLoading: state=>state.importLoading,
+    caseType: state=>state.case_type,
+    caseMap: state=>{
+      const map = new Map();
+      state.case_type.forEach(_=>{map.set(_.id, _.name)});
+      return map;
+    }
+
+    
   },
   mutations: {
     setDragId (state, id) {

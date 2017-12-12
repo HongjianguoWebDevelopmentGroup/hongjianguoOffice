@@ -46,24 +46,34 @@ export default {
 		}
 		
 	},
-	coverObj (a1, a2, { obj } = {}) {
+	coverObj (a1, a2, { obj, skip } = {}) {
 		
 		const map = new Map();
-		
+		const skip_map = new Map();
 		if(obj) {
-			obj.forEach(_=>{ map.set(_, true) });
+			if(obj.arr) {
+				obj.arr.forEach(_=>{ map.set(_, true) });
+			}else {
+				obj.forEach(_=>{ map.set(_, true) });
+			}
+		
 		}
-
+		if(skip) {
+			skip.forEach(_=>{ skip_map.set(_, true) });
+		}
+		const k = obj.key;
 		for (let key in a1) {
 			const v = a2[key];
 
 			if(v === undefined) continue;
-			
-			if( obj && typeof v == 'object' && map.get(key) ) {
+			if(skip && skip_map.get(key)) {
+				continue;
+			}else if( obj && typeof v == 'object' && map.get(key) ) {
+				
 				if( Array.isArray(v) ) {
-					a1[key] = v.map(_=>_.id);
+					a1[key] = k ? v.map(_=>_[k]) : v.map(_=>_.id);
 				}else {
-					a1[key] = v.id;	
+					a1[key] = k ? v[k] : v.id;	
 				}
 			}else {
 				a1[key] = v == undefined ? a1[key] : v;	
@@ -92,6 +102,7 @@ export default {
 		}
 	},
 	//arr = [{id:1,name: 'aaa'},{id: 2, name: 'bbb'}];
+	
 	//splitObj(arr, ['id','name']) = {'id': [1,2], 'name': ['aaa','bbb']};
 	//splitObj(arr, 'id') = [1,2];
 	splitObj (arr, keys) {
