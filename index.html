@@ -3,8 +3,40 @@
   <head>
     <meta charset="utf-8">
     <link rel="icon" href="/static/bitbug_favicon_32.ico" type="image/x-icon" />
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      //模拟登陆
+      $.ajax({
+        url: '/api/login',
+        type: 'POST',
+        async: false,
+        data: {
+          username: 'admin', 
+          password: 'Z9jgM6FhdKWEqbbpJePv/6qeTO/Yk2b6lx7zF4tiBncRubwf0fz93hkqGXCiWvqXCDIq7x+kAH3TK5zhjDZ53jgt1Gx1vvBPHn3ga7HTqPrnc+VhhuVGeTefHShJBx32rnbhL6LbEqCAMGqtQXaovCtuJGY6uWYAPfecAOGMuadnxTigTTBwKtW2oVP4J/EwAroYKuy4MK4Pd7YGtFoJAhlpKVOponsgsYQ8EKGOSVxcZgcgnOw8LhPy28N+xoFCh0OBkMyjM80Ybjq+H8BO6CacnDzQReZL5wQZqBdTtW7CUBi6S4+JWDPBahqNgz7jD73UhEIeG0ivFLEdCWtlVw==',
+        }
+      })
+      //验证是否登陆并获得一些基础资源信息,若获取失败则直接跳转至登陆页面
+      $.ajax({
+        url: '/api/userinfo',
+        type: 'GET',
+        async: false,
+        success: function (_) {
+          if (_.status) {
+            if(!window.appCache) {
+              window.appCache = {};
+            }
+            window.appCache.userinfo = _.member;
+          }else {
+           // window.location.href = '/login';
+          }
+        },
+        error: function (_) {
+          // window.location.href = '/login';
+        }
+      })
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.8.5/echarts.min.js"></script>
-    <title>红坚果知识产权管理系统</title>
+    <title>红坚果知识产权管理系统(事务所)</title>
   </head>
   <body>
     <div id="app"></div>

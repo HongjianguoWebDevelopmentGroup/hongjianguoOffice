@@ -50,8 +50,11 @@ export default {
 		
 		const map = new Map();
 		const skip_map = new Map();
+		let k = '';
 		if(obj) {
+
 			if(obj.arr) {
+				k = obj.key;
 				obj.arr.forEach(_=>{ map.set(_, true) });
 			}else {
 				obj.forEach(_=>{ map.set(_, true) });
@@ -61,7 +64,7 @@ export default {
 		if(skip) {
 			skip.forEach(_=>{ skip_map.set(_, true) });
 		}
-		const k = obj.key;
+		
 		for (let key in a1) {
 			const v = a2[key];
 

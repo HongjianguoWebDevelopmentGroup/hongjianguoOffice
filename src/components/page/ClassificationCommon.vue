@@ -1,42 +1,48 @@
+<!--技术分类管理与产品分类管理-->
 <template>
   <div class="main">
-	  <el-tree 
-	  	:data="options"
-	  	:props="props"
-	  	node-key="id"
-	  	highlight-current
-	  	:expand-on-click-node="false"
-	  	:render-content="renderContent"
-	  	:current-node-key="currentNodeKey"
-	  	@current-change="handleCurrentChange"
-      :style="`height: ${innerHeight - 400}px; overflow: auto; font-size: 14px;`"
-
-	  >
-	  </el-tree>
-	  <app-collapse :col-title="colTitle" v-if="currentNodeKey != ''" style="margin-top: 15px; margin-bottom: 0px;">
-		  <el-form ref="form" >
+    
+      <el-card style="width: 400px; float: left;">
+        <el-button slot="header" type = "primary" @click="addPop(0)" size="small">添加根节点</el-button>
+        <el-tree 
+    	  	:data="options"
+    	  	:props="props"
+    	  	node-key="id"
+    	  	highlight-current
+    	  	:expand-on-click-node="false"
+    	  	:render-content="renderContent"
+    	  	:current-node-key="currentNodeKey"
+    	  	@current-change="handleCurrentChange"
+          :style="`height: ${innerHeight - 180}px; overflow: auto;border-top: 0; font-size: 12px;`" 
+    	  >
+    	  </el-tree>
+      </el-card>
+    
+    <el-card style="margin-left: 420px;">
+		  <el-form ref="form" v-show="!!currentNodeKey">
 		  	<el-form-item label="名称" prop="name">
-		  		<el-input v-model="form.name"></el-input>
+		  		<el-input v-model="form.name" :placeholder="`请填写${typeText}名称`"></el-input>
 		  	</el-form-item>
 		  	<el-form-item label="描述" prop="description">
 		  		<el-input type="textarea" v-model="form.description"></el-input>
 		  	</el-form-item>
 		  	<el-form-item style="margin-bottom: 0;">
-		  		<el-button type="primary" @click="edit">保存</el-button>
+		  		<el-button type="primary" @click="edit" size="small">保存</el-button>
 		  	</el-form-item>
 		  </el-form>
-	  </app-collapse>
-	  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
+      <div v-show="!currentNodeKey" style="margin: 15px 10px; font-size: 14px;">{{ `暂未选择${typeText}...` }}</div>
+	  </el-card>
+	  <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" @close="$refs.pop_form.resetFields();">
 			<el-form ref="pop_form" prop="name" label-width="50px">
 		  	<el-form-item label="名称" prop="name">
-		  		<el-input v-model="pop_form.name"></el-input>
+		  		<el-input v-model="pop_form.name" :placeholder="`请填写${typeText}名称`"></el-input>
 		  	</el-form-item>
 		  	<el-form-item label="描述" prop="description">
-		  		<el-input type="textarea" v-model="pop_form.description"></el-input>
+		  		<el-input type="textarea" v-model="pop_form.description" :placeholder="`请填写${typeText}描述`"></el-input>
 		  	</el-form-item>
 		  	<el-form-item style="margin-bottom: 0;">
-		  		<el-button type="primary" @click="add">确认</el-button>
-		  		<el-button @click="dialogVisible = false">取消</el-button>
+		  		<el-button type="primary" @click="add" size="small">确认</el-button>
+		  		<el-button @click="dialogVisible = false" size="small">取消</el-button>
 		  	</el-form-item>
 	  	</el-form>
 	  </el-dialog>
@@ -74,15 +80,15 @@ export default {
   	renderContent (h, {node, data}) {
       console.log(data);
   		return (
-          <span>
+          <span style="width: 100%;">
             <span>
             
-              <span>{node.label}</span>
+              <span style="max-width: 80px; white">{node.label}</span>
               <em style="color: #20a0ff; font-style: normal;"> ({ data.projects_count })</em>
             </span>
             <span style="float: right; margin-right: 20px">
-              <el-button size="mini" on-click={ () => this.addPop(data.id) }>新建</el-button>
-              <el-button size="mini" on-click={ () => this.treeDelete(data.id) }>删除</el-button>
+              <el-button size="mini" class="tree-render-btn" on-click={ () => this.addPop(data.id) }>新建</el-button>
+              <el-button size="mini" class="tree-render-btn" on-click={ () => this.treeDelete(data.id) }>删除</el-button>
             </span>
           </span>);
       
@@ -100,7 +106,6 @@ export default {
   	addPop (id) {
   		this.add_id = id;
   		this.dialogVisible = true;
-  		if( this.$refs.pop_form ) this.$refs.pop_form.resetFields();
   	},
   	add () {
   		const url = this.url;
@@ -126,7 +131,7 @@ export default {
   	},
   	treeDelete (id) {
   		const d = this.optionMap.get(id);
-  		this.$confirm(`删除后不可恢复，确认删除${d.name}？`, {type: 'warning'})
+  		this.$confirm(`删除后不可恢复，确认删除“${d.name}”？`, {type: 'warning'})
   			.then(_=>{
   				const url = `${this.url}/${id}`;
 		  		const success = _=>{
@@ -175,7 +180,18 @@ export default {
   	colTitle () {
   		const t = this.pageType;
   		return t == 'classification' ? '技术详情' : '产品详情';
-  	}
+  	},
+    typeText () {
+      const t = this.pageType;
+      if(t == 'classification') {
+        return '技术分类';
+      }
+      if(t == 'product') {
+        return '产品分类';
+      }
+
+      return '';
+    }
   },
   components: { AppCollapse },
 }

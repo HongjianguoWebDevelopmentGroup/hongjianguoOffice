@@ -18,7 +18,8 @@ export default {
 		  	'name': 'contractList',
 		  	'url': URL,
 		  	'height': 'default2',
-		  	'search_placeholder': '编号、客户、分所、上传用户',
+		  	'search_placeholder': '编号、客户、部门、上传用户',
+		  	'rowClick': this.editPop,
 		  	'header_btn': [
 		  	   { type: 'add', click: this.addPop},
 		  	   { type: 'delete'},
@@ -35,14 +36,14 @@ export default {
 		  	  { 
 		  	  	type: 'text', 
 		  	  	label: '相关客户', 
-		  	  	prop: 'customer', 
+		  	  	prop: 'client', 
 		  	  	render_simple: 'name', 
 		  	  	width: '178'
 		  	  },
 		  	  { 
 		  	  	type: 'text', 
-		  	  	label: '分所', 
-		  	  	prop: 'agency', 
+		  	  	label: '部门', 
+		  	  	prop: 'branch', 
 		  	  	render_simple: 'name',  
 		  	  	width: '178',
 		  	  },
@@ -92,14 +93,6 @@ export default {
 		  	  	label: '备注', 
 		  	  	prop: 'remark',
 		  	  	width: '200'
-		  	  },
-		  	  { 
-		  	  	type: 'action',
-		  	  	label: '操作',
-		  	  	width: '100',
-		  	  	btns: [
-		  	  	  { type: 'edit', click: this.editPop },
-		  	  	]	
 		  	  }
 		  	],
 		  },

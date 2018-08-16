@@ -1,3 +1,4 @@
+<!--项目管理-->
 <template>
 	<div class="main">
 	<table-component :data="tableData" :tableOption="options" @refreshTableData="refreshTableData" ref="table"></table-component>
@@ -7,8 +8,8 @@
 	</app-shrink>
 
 	<common-detail
-		v-if="project"
-    :type="project.category" 
+    style="width: 916px;"
+    :type="project.category ? categoeyMap[project.category] : ''" 
     :id="project.id" 
     :visible.sync="projectVisible" 
     :title="project.title"
@@ -75,6 +76,11 @@ export default {
 			tableData: '',
 			project: '',
 			projectVisible: false,
+			categoeyMap: {
+				1: 'patent',
+				2: 'trademark',
+				3: 'copyright',
+			}
 		}
 	},
 	methods: {

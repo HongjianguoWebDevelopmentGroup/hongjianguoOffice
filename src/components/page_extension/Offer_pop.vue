@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="dialogVisible" class="dialog-small">
+  <el-dialog :title="title" :visible.sync="dialogVisible" class="dialog-small" @close="clear">
   	<el-form label-width="100px" ref="form" :model="form" :rules="rules" >
   		
   		<el-form-item label="服务名称" prop="name">
@@ -15,8 +15,8 @@
 			</el-form-item>
 
 			<el-form-item style="margin-bottom: 0;">
-				<el-button type="primary" @click="add" v-if="type === 'add'" :disabled="btn_disabled">添加</el-button>
-				<el-button type="primary" @click="edit" v-if="type === 'edit'" :disabled="btn_disabled">编辑</el-button>
+        <el-button type="primary" size="small" @click="save" :loading="btn_disabled">{{ btn_disabled ? '保存中...' : '保存' }}</el-button>
+        <el-button type="danger" size="small" @click="dialogVisible = false" :disabled="btn_disabled">取消</el-button>
 			</el-form-item>
 
   	</el-form>
@@ -42,6 +42,17 @@ export default {
         'price': { type: 'number', required: true, message: '报价不能为空', trigger: 'blur' },
       }
 		}
+  },
+  methods: {
+    save () {
+      if(this.type == 'add') {
+        this.add();
+      }
+
+      if(this.type == 'edit') {
+        this.edit();
+      }
+    }
   },
   components: {
   	StaticSelect,

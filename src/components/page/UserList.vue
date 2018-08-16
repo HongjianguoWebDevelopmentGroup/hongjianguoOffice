@@ -19,7 +19,7 @@
 				</table-component>
   		</div>
 	
-  	<pop :popType="popType" :group="current_group" @refresh="refresh" ref="pop"></pop>
+  	<pop :group="current_group" @refresh="refresh" ref="pop"></pop>
   	
   	<el-dialog title="将所选用户添加至用户组" :visible.sync="dialogVisible" :close-on-click-modal="false">
 			<el-form label-width="100px">
@@ -147,12 +147,10 @@ export default {
     	}
     },
 		addPop () {
-			this.popType = 'add';
 			this.$refs.pop.show();
 		},
 		editPop (row) {
-			this.popType = 'edit';
-			this.$refs.pop.show(row);
+			this.$refs.pop.show(row, 'edit');
 		},
 		toGroupPop () {
 			const s = this.$refs.table.tableSelect;

@@ -16,6 +16,11 @@ import StaticSelect from '@/components/form/StaticSelect'
 import RemoteSelect from '@/components/form/RemoteSelect'
 
 const URL = '/api/businesses'
+const typeMap = {
+	1: '专利',
+	2: '商标',
+	3: '版权',
+}
 export default {
 	name: 'businessListProject',
 	props: ['row'],
@@ -48,13 +53,15 @@ export default {
 						type: 'text',
 						label: '案件类型',
 						prop: 'category',
+						render_text (item) {
+							return typeMap[item];
+						}
 					}
 				]
 			},
 			tableData: [],
 			category: '',
 			dialogVisible: false,
-			projectVisible: false,
 			loading: false,
 			project: [],
 		};

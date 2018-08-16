@@ -1,6 +1,8 @@
 <template>
 	<div class="main">
-		<table-component :data="tableData" :tableOption="option" @refreshTableData="refreshTableData" ref="table"></table-component>
+		<table-component :data="tableData" :tableOption="option" @refreshTableData="refreshTableData" ref="table">
+			<static-select type="area" v-model="area" slot="area" style="width: 150px; margin-left: 5px;"></static-select>
+		</table-component>
 		<pop ref="pop" @refresh="popRefresh"></pop>
 	</div>
 </template>
@@ -8,6 +10,8 @@
 const URL = '/api/offers'
 import TableComponent from '@/components/common/TableComponent'
 import Pop from '@/components/page_extension/Offer_pop'
+import StaticSelect from '@/components/form/StaticSelect'
+import {mapGetters} from 'vuex'
 export default {
 	name: 'offer',
 	data () {
@@ -17,10 +21,12 @@ export default {
 				url: URL,
 				height: 'default2',
 				search_placeholder: '服务名称',
+				rowClick: this.editPop,
 				header_btn: [
 					{ type: 'add', click: this.addPop },
 					{ type: 'delete' },
 				],
+				header_slot: ['area'],
 				columns: [
 					{ type: 'selection' },
 					{ 
@@ -34,30 +40,31 @@ export default {
 						label: '地区',
 						prop: 'area',
 						width: 100,
+						render_text: _=>this.areaMap.get(_),
 					},
 					{
 						type: 'text',
 						label: '默认报价',
 						prop: 'price',
 						width: 150,
-					},
-					{
-						type: 'action',
-						width: 100,
-						btns: [
-							{ type: 'edit', click: this.editPop },
-						],
+						sortable: true,
 					}
 				],
 			},
 			tableData: '',
+			area: '',
 		};
+	},
+	computed: {
+		...mapGetters([
+			'areaMap'
+		])
 	},
 	methods: {
 		refreshTableData (option) {
 			this.$axiosGet({
 				url: URL,
-				data: option,
+				data: Object.assign({}, {area: this.area}, option),
 				success: _=>{
 					this.tableData = _.offers;
 				}
@@ -82,9 +89,15 @@ export default {
 	mounted () {
 		this.refresh();
 	},
+	watch: {
+		area () {
+			this.refresh();
+		}
+	},
 	components: {
 		TableComponent,
 		Pop,
+		StaticSelect,
 	}
 }
 </script>

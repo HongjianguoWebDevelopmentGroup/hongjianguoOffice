@@ -3,12 +3,12 @@
     :value="value"
     @input="handleInput"
 
-    :on-color="config.onColor"
-    :off-color="config.offColor"
-    :on-text="config.onText"
-    :off-text="config.offText"
-    :on-value="config.onValue"
-    :off-value="config.offValue"
+    :active-color="config.onColor"
+    :inactive-color="config.offColor"
+    :active-text="config.onText"
+    :inactive-text="config.offText"
+    :active-value="config.onValue"
+    :inactive-value="config.offValue"
   >
   </el-switch>
 </template>

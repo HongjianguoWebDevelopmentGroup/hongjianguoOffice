@@ -1,6 +1,6 @@
 <template>
 <app-collapse col-title="任务筛选" default-close>
-  <el-form label-width="100px" :model="form" ref="form">   
+  <el-form label-width="100px" :model="form" ref="form" class="strainer">   
 
     <el-row>
       <el-col :span="12">
@@ -45,7 +45,7 @@
       </el-col>
     </el-row>
   	<el-row style="text-align: center">
-      <el-button type="info" size="small" @click="query">查询</el-button>
+      <el-button type="primary" size="small" @click="query">查询</el-button>
       <el-button type="danger" size="small" @click="clear" style="margin-left: 20px">清空</el-button>
     </el-row>
   </el-form>

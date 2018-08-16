@@ -38,13 +38,21 @@
           :src="sysmesg.length != 0 ? '/static/static_img/news_in.png' : '/static/static_img/news.png'"
         />        
           <el-badge :value="pendingTaskCount" class="task-pending-top">
-            <el-button size="mini" icon="warning" type="primary" @click="$router.push('/task/pending')" title="待办任务"></el-button>
+            <el-button size="mini" style="padding: 7px 10px;" icon="el-icon-warning" type="primary" @click="$router.push('/task/pending')" title="待办任务"></el-button>
           </el-badge>          
     </nav>
       <span class="nav-left-btn" @click="navToggle"><span class="nav-left-btn-arrow el-icon-arrow-left"></span></span>
       <div class="nav-left" :style="`height: ${innerHeight}px`">
         
-        <el-menu v-if="menusMap != null" theme="dark" router unique-opened :default-active="select.path">
+        <el-menu 
+          v-if="menusMap != null" 
+          router 
+          unique-opened 
+          :default-active="select.path"
+          background-color="#324157"
+          text-color="#bfcbd9"
+          active-text-color="#20a0ff"
+        >
           <app-menu-item v-for="item in menu_data" :dd="item" :key="item.path"></app-menu-item>
         </el-menu>
 
@@ -163,8 +171,8 @@ export default {
       }
     },
     navToggle () {
-      let i = 32;
-      let n = this.leftVisible ? 160 : 0;
+      let i = 40;
+      let n = this.leftVisible ? 200 : 0;
       i = this.leftVisible ? -i : i;
 
       this.$store.commit('toggleLeftVisible');
@@ -183,7 +191,7 @@ export default {
 
         if(n == 0) {
           btn.find('.nav-left-btn-arrow').removeClass('el-icon-arrow-left').addClass('el-icon-arrow-right');
-        }else if( n== 160) {
+        }else if( n >= 200) {
           btn.find('.nav-left-btn-arrow').removeClass('el-icon-arrow-right').addClass('el-icon-arrow-left');
         }else {
           window.requestAnimationFrame(animation);
@@ -192,12 +200,10 @@ export default {
     }
   },
   created () {
-    const url = '/api/userinfo';
+    //当index.html中的同步请求成功后,渲染VUE应用,此时全局应存在appCache变量
     const success = _=>{
       this.userinfoLoading = false;
-      this.$store.commit('setUser', _.member);
-
-      // this.$store.dispatch('refreshTags');
+      this.$store.commit('setUser', window.appCache.userinfo);
       
       //避免每次F5都发送请求的方法：
       //  1.每次使用相关数据的位置添加一个尝试初始化的函数
@@ -205,6 +211,7 @@ export default {
       this.$store.dispatch('refreshProduct');
       this.$store.dispatch('refreshClassification');
       this.$store.dispatch('refreshBranch');
+      this.$store.dispatch('refreshGroup');
       
       // this.$store.dispatch('refreshIpr');
       
@@ -219,20 +226,9 @@ export default {
       // this.$store.dispatch('refreshFileType');
       // this.$store.dispatch('refreshMail');
     };
-    const error = _=>{
-      window.location.href = '/login';
-    };
-    const catchFunc = _=>{
-      console.log(_);
-      // window.location.href = '/login';
-    }
-    const success2 = _=>{
-      this.axiosGet({url, success, error, catchFunc});
-    }
 
-    // this.axiosGet({url, success, error, catchFunc});
-    this.axiosPost({url: '/api/login', success: success2, data: {username: 'admin', password: 'Z9jgM6FhdKWEqbbpJePv/6qeTO/Yk2b6lx7zF4tiBncRubwf0fz93hkqGXCiWvqXCDIq7x+kAH3TK5zhjDZ53jgt1Gx1vvBPHn3ga7HTqPrnc+VhhuVGeTefHShJBx32rnbhL6LbEqCAMGqtQXaovCtuJGY6uWYAPfecAOGMuadnxTigTTBwKtW2oVP4J/EwAroYKuy4MK4Pd7YGtFoJAhlpKVOponsgsYQ8EKGOSVxcZgcgnOw8LhPy28N+xoFCh0OBkMyjM80Ybjq+H8BO6CacnDzQReZL5wQZqBdTtW7CUBi6S4+JWDPBahqNgz7jD73UhEIeG0ivFLEdCWtlVw=='}});
-
+    success();
+    
   },
   beforeCreate () {
     const refreshWindow =  _=> {
@@ -263,7 +259,7 @@ $nav_bgColor: #383838;
 $nav_height: 50px;
 
 $navL_bgColor: #324157;
-$navL_width: 160px;
+$navL_width: 200px;
 
 $container_padding: 20px;
 
@@ -307,7 +303,7 @@ nav {
 }
 .nav-left-btn {
   position: fixed;
-  left: 160px;
+  left: $navL_width;
   top: 50%;
   margin-top: -50px;
   background-color: #68758a;
@@ -449,38 +445,25 @@ nav {
 }
 /*这里放入重写element-ui样式的内容*/
 #app {
-  .el-tree-node__expand-icon.expanded {
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+  .el-menu {
+    border-right: none;
   }
-  .el-tree-node__expand-icon {
-    cursor: pointer;
-    height: 0;
-    margin-left: 12px;
-    border: 8px solid transparent;
-    border-right-width: 0;
-    border-left-color: #97a8be;
-    border-left-width: 12px;
-    transition: transform .3s ease-in-out;
+  .el-submenu__title i.iconfont {
+    color: inherit;
   }
-  .el-tree-node__content>.el-checkbox, .el-tree-node__content>.el-tree-node__expand-icon {
-    margin-right: 10px;
+  .el-menu-item i.iconfont {
+    color: inherit;
   }
-  .el-tree-node__content {
-    line-height: 36px;
-    height: 36px;
-  }
-  .el-tree-node__expand-icon.is-leaf {
-    border-color: transparent;
-    cursor: default;
-  }
-  .dialog-mini .el-dialog {
+  .dialog-mini>.el-dialog {
     width: 300px;
   }
-  .dialog-small .el-dialog {
+  .dialog-ss>.el-dialog {
+    width: 450px;
+  }
+  .dialog-small>.el-dialog {
     width: 600px;
   }
-  .dialog-medium .el-dialog {
+  .dialog-medium>.el-dialog {
     width: 900px;
   }
   .el-dropdown-menu__item {
@@ -517,6 +500,9 @@ nav {
   .el-step.is-vertical .el-step__main {
     padding-left: 40px;
   }
+  .form-information {
+    padding: 0 20px;
+  }
   .form-information .el-form-item {
     margin-bottom: 0px;
     border-bottom: 1px solid #f2f2f2; 
@@ -534,16 +520,16 @@ nav {
   }
   .task-pending-top{
     float: right;
-    margin-right: 30px;
+    margin-right: 20px;
   }
   .task-pending-top .el-badge__content.is-fixed {
     border-color: #ff4949;
     top: 14px;
     transform: translateY(-50%) translateX(100%) scale(0.8);
   }
-  .el-submenu .el-menu-item {
+/*  .el-submenu .el-menu-item {
     margin-left: -15px;
-  }
+  }*/
   .empty-top-left .el-table__empty-text {
     top: 40px;
     left: 80px;
@@ -575,13 +561,30 @@ nav {
     left: 0px;
   }
  .el-dialog--small  .el-upload--text {
-      display: inline-block;
-      text-align: center;
-      cursor: pointer;
-      position: absolute; 
-    }
- 
-
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    position: absolute; 
+  }
+  .strainer .el-date-editor {
+    width: 100%;
+  }
+  .tree-header {
+    margin-bottom: 10px;
+  }
+  .tree-header-btn {
+    padding: 5px;
+    margin-left: 0;
+  }
+  .tree-header-search {
+    width: 130px;
+    margin-left: 10px;  
+  }
+  .tree-render-btn {
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+  }
 }
 .el-tooltip__popper {
   max-width: 500px;

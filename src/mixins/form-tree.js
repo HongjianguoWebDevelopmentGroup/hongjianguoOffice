@@ -8,15 +8,19 @@ export default {
   	'disabled': {
   		type: Boolean,
   		default: false,
-  	}
+  	},
+    'props': {
+      type: Object,
+      default () {
+        return {
+          label: 'name',
+          children: 'children',
+        }
+      }
+    }
 	},
 	data () {
-		return {
-		  'props': {
-		  	label: 'name',
-		  	children: 'children',
-		  },
-		}
+    return {};  
   },
   computed: {
     data () {

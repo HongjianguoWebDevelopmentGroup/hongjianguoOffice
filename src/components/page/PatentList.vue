@@ -3,20 +3,18 @@
     <strainer v-model="filter" @refresh="refresh"></strainer>
     
     <table-component :tableOption="tableOption" :data="tableData" @refreshTableData="refreshTableData" ref="table" :refresh-proxy="refreshProxy">
-      <el-button v-if="!!(menusMap && !menusMap.get('/patent/download') )" slot="download" :loading="downloadLoading" icon="share" @click="downloadPop" type="primary" style="margin-left: 5px;">批量下载</el-button>
+      <el-button v-if="!!(menusMap && !menusMap.get('/patent/download') )" slot="download" :loading="downloadLoading" icon="share" @click="downloadPop" type="primary" style="margin-left: 5px;" size="small">批量下载</el-button>
     </table-component>
+        
+    <common-detail
+      :title="currentRow.title"
+      :visible.sync="shrinkVisible" 
+      type="patent" 
+      :id="currentRow.id" 
+      ref="detail"
+      @editSuccess="refresh">
+    </common-detail>
     
-    
-      <common-detail
-        :title="currentRow.title"
-        :visible.sync="shrinkVisible" 
-        type="patent" 
-        :id="currentRow.id" 
-        ref="detail"
-        @editSuccess="refresh">
-      </common-detail>
-    
-
     <el-dialog title="批量下载" :visible.sync="downloadVisible">
       <el-form>
         <el-form-item label="文件类型">
@@ -54,12 +52,10 @@ export default {
       refreshProxy: '',
       currentRow: '',
       shrinkVisible: false,
-      
       downloadVisible: false,
       downloadIds: [],
       downloadFileType: [],
-      downloadLoading: false,
-      
+      downloadLoading: false,      
       tableOption: {
         'name': 'patentList',
         'url': URL,

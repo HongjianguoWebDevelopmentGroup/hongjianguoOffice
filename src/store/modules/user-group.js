@@ -1,10 +1,11 @@
 let url = '/api/groups';
 const state = {
-	data: undefined,
+	data: [],
+	next: '',
 }
 
 const getters = {
-	groupOptions: state=>state.data,
+	groupData: state=>state.data,
 	groupMap: state=>{
 		const map = new Map();
 
@@ -15,32 +16,48 @@ const getters = {
 		}
 
 		return map;
-	}
+	},
+	groupInner: state=>{
+		return state.data.filter(_=>_.inner == 1 ? true : false);
+	},
+	//一些与角色相关的页面初始化操作,通过Proxy去调用,避免异步报错
+	groupNext: state=>{
+		if(state.next) {
+			return state.next;
+		}else {
+			//若next不存在,则所有操作都不执行
+			return new Promise(function () {});
+		}
+	},
 }
 
 const mutations = {
 	setGroup (state, d) {
 		state.data = d;
+	},
+	setGroupNext (state, d) {
+		state.next = d;
 	}
 }
 
 const actions = {
-	refreshGroup ({commit, rootState}, callback) {
+	refreshGroup ({commit, rootState}, next) {
 		url = rootState.status ? url.replace(/\/api/, '') : url;
-		rootState.axios
-			.get(url)
-			.then(response=>{
+		const n = rootState.axios.get(url);
+		commit('setGroupNext', n);
+		n.then(response=>{
 				const d = response.data;
 				if(d.status){
 					commit('setGroup', d.groups);
-					
-					if( callback ) callback(d);
 				}else {
 					console.log(d);
-					// alert('请求用户组数据失败');
 				}
 			})
 			.catch(error=>{console.log(error)});
+
+		if(next) {
+			next(n);
+		}
 	}
 }
 

@@ -5,13 +5,6 @@
           <branch v-model="form.branch" v-if="type == 'add'"></branch>
           <span v-else>{{ branchName ? branchName : '暂未归属某个部门' }}</span>
         </el-form-item>
-      	<el-form-item label="IPR">
-          <span class="form-item-text" v-if="type == 'add'">{{ user ? user.name : '暂未取得当前用户信息' }}</span>
-          <static-select type="ipr" v-model="form.ipr" v-else></static-select>
-      	</el-form-item>
-        <el-form-item label="提案人">
-          <remote-select type="member" v-model="form.proposer"></remote-select>
-        </el-form-item>
         <el-form-item label="摘要">
           <el-input type="textarea" v-model="form.abstract" placeholder="请填写专利摘要" :rows="6" class="custom-textarea"></el-input>
         </el-form-item>
@@ -101,8 +94,6 @@ export default {
 		return {
 			form: {
         branch: '',
-			  ipr: '',
-        proposer: '',
         issue_date: '',
         issue_number: '',
         abstract: '',

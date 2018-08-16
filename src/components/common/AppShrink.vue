@@ -4,7 +4,7 @@
 	<div class="app-shrink" v-show="visible">
 		<div class="app-shrink-head">
 			<span style="font-size: 18px; font-weight: bold;">{{ title }}</span>
-			<el-button icon="close" style="float: right; border: 0; height: 40px;" @click="close" title="关闭"></el-button>
+			<el-button icon="el-icon-close" style="float: right; border: 0; padding: 5px; margin: 10px;" @click="close" title="关闭"></el-button>
 			<slot name="header"></slot>
 		</div>
 		<div v-loading="shrinkLoading" :element-loading-text="shrinkLoadingText">

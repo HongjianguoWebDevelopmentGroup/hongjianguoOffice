@@ -14,6 +14,7 @@
         type="daterange"
         placeholder="选择日期范围"
         size="small"
+        style="width: 200px;"
       >
       </el-date-picker>
     </div>

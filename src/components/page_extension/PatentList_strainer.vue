@@ -1,6 +1,6 @@
 <template>
   <app-collapse col-title="专利筛选" default-close>
-  	<el-form :model="form" label-width="80px" ref="form">
+  	<el-form :model="form" label-width="80px" ref="form" class="strainer">
   		<el-row>
 				<el-col :span="12">
 					<el-form-item label="当前进度" prop="type">

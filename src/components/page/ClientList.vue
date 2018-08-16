@@ -1,3 +1,4 @@
+<!--客户管理-->
 <template>
 	<div class="clientList">
 		<table-component :tableOption="tableOption" :data="tableData" ref="table" @refreshTableData="refreshTableData"></table-component>
@@ -15,7 +16,9 @@ import ClientForm from '@/components/page_extension/ClientList_form'
 import ClientListDetail from '@/components/page_extension/ClientList_detail'
 import AppShrink from '@/components/common/AppShrink'
 import Detail from '@/components/page_extension/ClientList_detail'
-const URL = '/api/customers';
+import {mapGetters} from 'vuex'
+
+const URL = '/api/clients';
 export default {
   name: 'clientList',
   data () {
@@ -36,13 +39,38 @@ export default {
 		  	'columns': [
 		  	  { type: 'selection' },
 		  	  { type: 'text', label: '客户名称', prop: 'name', min_width: '178', show_option: false},
-		  	  { type: 'text', label: '地区', prop: 'area', width: '200'},
+		  	  { 
+            type: 'text', 
+            label: '地区', 
+            prop: 'area', 
+            width: '200',
+            render_text: _=>{
+              return this.areaMap.get(_);
+            },
+          },
 		  	  { type: 'text', label: '英文名称', prop: 'en_name', width: '178'},
-		  	  { type: 'text', label: '省份', prop: 'province', width: '198'},
-		  	  { type: 'text', label: '城市', prop: 'city', width: '198'},
+		  	  { 
+            type: 'text', 
+            label: '省份', 
+            prop: 'province', 
+            width: '200',
+            render_text: _=>{
+              return this.provinceMap.get(_);
+            }
+          },
+		  	  { 
+            type: 'text', 
+            label: '城市', 
+            prop: 'city', 
+            width: '200',
+            render_text: _=>{
+              return this.cityMap.get(_);
+            }
+          },
 		  	  { type: 'text', label: '联系人', prop: 'contact', width: '178'},
 		  	  { type: 'text', label: '电子邮箱', prop: 'email', width: '220'},
-		  	  { type: 'text', label: '案件数', prop: 'project_count', width: '160'},
+          { type: 'text', label: '手机号', prop: 'phone_number', width: '200' },
+		  	  { type: 'text', label: '案件数', prop: 'project_count', width: '150' },
 		  	],
 		  },
 		  tableData: '',
@@ -52,7 +80,13 @@ export default {
 		  filter: {},
 		}	
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'areaMap',
+      'cityMap',
+      'provinceMap',
+    ]),
+  },
   methods: {
   	handleRowClick (row) {
   		this.currentRow = row;
@@ -63,7 +97,7 @@ export default {
   	refreshTableData(option) {
   		
   		const success = _=>{
-        this.tableData = _.customers;  
+        this.tableData = _.result;  
   		}
   		this.$axiosGet({
   			url: URL,

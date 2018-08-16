@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :key="popType" :title="popType == 'add' ? '添加用户' : '编辑用户'" :visible.sync="dialogVisible" @close="close">
-		<el-form :model="form" label-width="100px" ref="form" :rules="rules">
+  <el-dialog :title="popType == 'add' ? '添加用户' : '编辑用户'" :visible.sync="dialogVisible" @close="close">
+		<el-form :key="popType" :model="form" label-width="100px" ref="form" :rules="rules">
 			
       <el-form-item label="用户组" prop="group_id" v-if="popType == 'add'" :rules="{ type: 'number', required: true, message: '用户组选择不能为空', trigger: 'change'}">
         <static-select type="group" v-model="form.group_id"></static-select>
@@ -31,11 +31,11 @@
         </el-form-item>
       </template>
       
-      <el-form-item label="代理所" v-if="group.id == 6">
+      <el-form-item label="代理所" v-if="form.group_id == 6">
         <remote-select type="agency" v-model="form.parent"></remote-select>
       </el-form-item>
 
-	    <el-form-item label="昵称" prop="name">
+	    <el-form-item label="姓名" prop="name">
 	    	<el-input v-model="form.name"></el-input>	
 	    </el-form-item>
 	    <el-form-item label="邮箱" prop="email">
@@ -61,8 +61,7 @@
 </template>
 
 <script>
-import UserRole from '@/components/form/UserRole'
-import AxiosMixins from '@/mixins/axios-mixins'
+
 import EditPassword from '@/components/form/EditPassword'
 import RemoteSelect from '@/components/form/RemoteSelect'
 import StaticSelect from '@/components/form/StaticSelect'
@@ -71,17 +70,13 @@ const URL = 'api/members'
 
 export default {
   name: 'userListPop',
-  mixins: [ AxiosMixins ],
   props: {
-  	'popType': {
-  		type: String, 
-  		default: 'add',
-  	},
   	'group': null,
   },
   data () {
 		return {
 			'id': '',
+      'popType': 'add',
 		  'form': {
         group_id: '',//用于添加时使用
         groups: [],//用于编辑时保存数据
@@ -110,25 +105,23 @@ export default {
   	},
   },
   methods: {
-  	show (row) {
+  	show (row, type='add') {
+      this.popType = type;
   		this.dialogVisible = true;
-  		
-  		// console.log("----------------------------------")
-  		// console.log(this.$refs.form.fields);
-  		this.$nextTick(()=>{
-  		// console.log(this.$refs.form.fields);
-  		// console.log("------------------------------------")
-  			if(this.$refs.form) {
-          this.$refs.form.resetFields();
-          this.form.username = "";
-          this.form.password = "";
-          this.form.password_again = "";
-        } 
+
+      if(this.$refs.form) {
+        this.form.username = '';
+        this.form.group_id = '';
+        this.$refs.form.resetFields();
+      }
+
+      this.$nextTick(()=>{
         if(this.popType == 'add') {
           this.form.group_id = this.group && this.group.id ? this.group.id : '';
         }
 
   			if(this.popType == 'edit') {
+          this.form.group_id = row.groups[0] ? row.groups[0]['id'] : ''; 
   				this.$tool.coverObj(this.form, row); 
   				this.id = row.id;
   			}
@@ -148,7 +141,7 @@ export default {
   			this.$emit('refresh');
   		}
 
-  		this.axiosPost({url, data, success});
+  		this.$axiosPost({url, data, success});
   	},
   	edit () {
   		let flag = false;
@@ -163,7 +156,7 @@ export default {
   			this.$emit('refresh');
   		}
 
-  		this.axiosPut({url, data, success});
+  		this.$axiosPut({url, data, success});
   	},
   	psdCheck () {
   		const psd = this.form.password;
@@ -193,7 +186,6 @@ export default {
   	}
   },
   components: { 
-  	UserRole,
   	EditPassword,
     RemoteSelect,
     StaticSelect,

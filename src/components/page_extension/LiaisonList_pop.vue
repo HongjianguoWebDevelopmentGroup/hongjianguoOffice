@@ -9,34 +9,8 @@
       		</el-form-item>
         </el-col>
         <el-col :span="12">
-    			 <el-form-item label="英文名" prop="en_name">
-            <el-input v-model="form.en_name" placeholder="请输入英文名"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="发明人国籍" prop="area">
-            <static-select type="area" v-model="form.area"></static-select>
-          </el-form-item>  
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="证件号码" prop="identity">
-            <el-input v-model="form.identity" placeholder="请输入证件号码"></el-input>
-          </el-form-item> 
-        </el-col>
-      </el-row>
-
-  		<el-row>
-        <el-col :span="12">
-          <el-form-item label="关联客户" prop="customer">
+    			<el-form-item label="关联客户" prop="customer">
             <remote-select type="customer" v-model="form.customer"></remote-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="不公开姓名" prop="not_disclose_name">
-            <app-switch v-model="form.not_disclose_name" type="is"></app-switch>
           </el-form-item>
         </el-col>
       </el-row>
@@ -80,9 +54,7 @@
 
 <script>
 import PopMixins from '@/mixins/pop-mixins'
-import StaticSelect from '@/components/form/StaticSelect'
 import RemoteSelect from '@/components/form/RemoteSelect'
-import AppSwitch from '@/components/form/AppSwitch'
 
 export default {
   name: 'inventorListPop',
@@ -91,30 +63,24 @@ export default {
 		return {
       form: {
         name: '',
-        en_name: '',
-        identity: '',
         customer: '',
         area: '',
         mobile: '',
         email: '',
         qq: '',
         weixin: '',
-        not_disclose_name: 0,
       },
       rules: {
-        name: { required: true, message: '发明人姓名不能为空', trigger: 'blur' },
-        area: { required: true, message: '发明人国籍不能为空', trigger: 'change' },
+        name: { required: true, message: '接口人姓名不能为空', trigger: 'blur' },
         customer: { type: 'number', required: true, message: '关联客户不能为空', trigger: 'change' },
       }
 		}
   },
   components: { 
     RemoteSelect,
-    StaticSelect,
-    AppSwitch,
   },
-  URL: '/api/inventors',
-  REMINDER_TEXT: '发明人',
+  URL: '/api/liaisons',
+  REMINDER_TEXT: '接口人',
 }
 </script>
 

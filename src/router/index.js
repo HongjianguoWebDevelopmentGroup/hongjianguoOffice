@@ -2,7 +2,8 @@
 import Router from 'vue-router'
 const Home                     = () => import('@/components/page/Home')
 const Proposal                 = () => import('@/components/page/Proposal')
-const InventorList             = () => import('@/components/page/InventorList')
+const Inventor                 = () => import('@/components/page/Inventor')
+const Contact                  = () => import('@/components/page/Contact')
 const ApplicantList            = () => import('@/components/page/ApplicantList')
 const ProposalCommon           = () => import('@/components/page/ProposalCommon')
 const CheckProposal            = () => import('@/components/page/CheckProposal')
@@ -33,7 +34,9 @@ const SystemMessageDetail      = () => import('@/components/page/SystemMessageDe
 const MailAdd                  = () => import('@/components/page/MailAdd')
 const Offer                    = () => import('@/components/page/Offer')
 const BusinessAdd              = () => import('@/components/page/BusinessAdd')
-const BusinessList              = () => import('@/components/page/BusinessList')
+const BusinessList             = () => import('@/components/page/BusinessList')
+const Employee                 = () => import('@/components/page/Employee')
+const Account                  = () => import('@/components/page/Account')
 //###################
 const CommonDetail             = () => import('@/components/page/CommonDetail')
 const Babel                    = () => import('@/components/page_extension/CommonDetail_base')
@@ -90,12 +93,17 @@ const router = new Router({
       component: Home
     },
     {
-      path: '/inventorList',
-      name: 'InventorList',
-      component: InventorList
+      path: '/client/inventor',
+      name: 'Inventor',
+      component: Inventor,
     },
     {
-      path: '/applicantList',
+      path: '/client/contact',
+      name: 'Contact',
+      component: Contact,
+    },
+    {
+      path: '/client/applicant',
       name: 'ApplicantList',
       component: ApplicantList
     },
@@ -235,6 +243,16 @@ const router = new Router({
       name: 'CopyrightNotice',
       meta: { type: 'copyright' },
       component: NoticeCommon,
+    },
+    {
+      path: '/setting/Employee',
+      name: 'Employee',
+      component: Employee,
+    },
+    {
+      path: '/setting/Account',
+      name: 'Account',
+      component: Account,
     },
     {
       path: '/userList',

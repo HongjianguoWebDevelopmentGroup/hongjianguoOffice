@@ -1,3 +1,4 @@
+<!--申请人管理-->
 <template>
   <div class="main">
 		<table-component :tableOption="option" :data="tableData" ref="table" @refreshTableData="refreshTableData"></table-component>
@@ -10,6 +11,7 @@
 import AxiosMixins from '@/mixins/axios-mixins'
 import TableComponent from '@/components/common/TableComponent'
 import Pop from '@/components/page_extension/ApplicantList_pop'
+import {mapGetters} from 'vuex'
 
 const URL = '/api/applicants';
 
@@ -22,6 +24,8 @@ export default {
         'name': 'applicant',
         'url': '/api/applicants',
         'height': 'default2',
+        'search_placeholder': '姓名、客户',
+        'rowClick': this.editPopUp,
 		  	'header_btn': [
 		  		{ type: 'add', click: this.addPopUp },
           { type: 'delete' },
@@ -29,40 +33,42 @@ export default {
 		  	],
 		  	'columns': [
 		  		{ type: 'selection' },
-		  		{ type: 'text', label: '申请人姓名', prop: 'name', sortable: true, width: '250' },
-		  		{ type: 'text', label: '申请人类型', prop: 'type_name', sortable: true, width: '200' },
-		  		{ type: 'text', label: '证件号码', prop: 'identity', sortable: true, width: '240' },
-		  		{ type: 'text', label: '地区', prop: 'area', sortable: true, width: '175',
-            render: (h,item)=>{
-              const d = this.areaMap.get(item);
-              return h('span', d ? d : '');
-            }  
-          },
-		  		{ type: 'text', label: '省份', prop: 'province', sortable: true, width: '175', 
-            render: (h, item)=>{ 
-              const d = this.provinceMap.get(Number.parseInt(item));
-              return h('span', d ? d : '');
-            } 
-          },
-		  		{ type: 'text', label: '城市', prop: 'city', sortable: true, width: '175', 
-            render: (h, item)=>{ 
-              const d = this.cityMap.get(item);
-              return h('span', d ? d : '');
-            }
-          },
-		  		{ type: 'text', label: '详细地址', prop: 'address', sortable: true, width: '260' },
-		  		{ type: 'text', label: '邮编', prop: 'postcode', sortable: true, width: '145' },
-		  		{ type: 'text', label: '费用备案', prop: 'fee_discount', sortable: true, width: '145', render: (h, item)=>h('span', item ? '已完成' : '未完成') },
-		  		{ type: 'text', label: '英文姓名', prop: 'ename', sortable: true, width: '175' },
-		  		{ type: 'text', label: '英文地址', prop: 'eaddress', sortable: true, width: '260' },
+		  		{ type: 'text', label: '申请人姓名', prop: 'name', width: '250' },
+          { type: 'text', label: '关联客户', prop: 'client', render_simple: 'name', width: '200' },
+          { type: 'text', label: '证件号码', prop: 'identity', width: '240' },
+          { type: 'text', label: '费用备案', prop: 'fee_discount', width: '145', render: (h, item)=>h('span', item ? '已完成' : '未完成') },
 		  		{ 
-		  			type: 'action',
-            width: '150',
-		  			btns: [
-		  				{ type: 'edit', click: this.editPopUp },
-		  				{ type: 'delete', click: this.applicantDelete },
-		  			] 
-		  		}
+            type: 'text', 
+            label: '申请人类型', 
+            prop: 'type', 
+            width: '200',
+            render_text: _=>this.applicantTypeMap.get(_), 
+          },
+          { 
+            type: 'text', 
+            label: '地区', 
+            prop: 'area', 
+            sortable: true, 
+            width: '175',
+            render_text: _=>this.areaMap.get(_),
+          },
+          { 
+            type: 'text', 
+            label: '省份', 
+            prop: 'province', 
+            sortable: true, 
+            width: '175', 
+            render_text: _=>this.provinceMap.get(_),
+          },
+          { 
+            type: 'text', 
+            label: '城市', 
+            prop: 'city', 
+            sortable: true, 
+            width: '175', 
+            render_text: _=>this.cityMap.get(_),
+          },
+          { type: 'text', label: '详细地址', prop: 'address', width: '260' },
 		  	],
 		  },
 		  tableData: [],
@@ -71,15 +77,12 @@ export default {
 		}
   },
   computed: {
-    provinceMap () {
-      return this.$store.getters.provinceMap;
-    },
-    cityMap () {
-      return this.$store.getters.cityMap;
-    },
-    areaMap () {
-      return this.$store.getters.areaMap;
-    } 
+    ...mapGetters([
+      'provinceMap',
+      'cityMap',
+      'areaMap',
+      'applicantTypeMap'
+    ])
   },
   methods: {
   	addPopUp () {

@@ -27,14 +27,22 @@ const actions = {
 		if(d) {
 			commit('setArea', JSON.parse(d));
 		}else {
+			$.ajax({
+				type: 'GET',
+				async: false,
+				url,
+				dataType: 'text',
+				success: response=>{
+					const arr = eval(`${response}`);
+					commit('setArea', arr);
+					rootState.tool.setLocal('area', JSON.stringify(arr));
+				},
+				error: error=>{console.log(error)},
+			})
 			rootState.axios
 			.get(url)
-			.then(response=>{
-				const arr = eval(`${response.data}`);
-				commit('setArea', arr);
-				rootState.tool.setLocal('area', JSON.stringify(arr));
-			})
-			.catch(error=>{console.log(error)});	
+			.then()
+			.catch();	
 		}
 	}
 }

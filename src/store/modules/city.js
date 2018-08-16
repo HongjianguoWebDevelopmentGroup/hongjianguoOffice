@@ -15,7 +15,7 @@ const getters = {
 		const map = new Map();
 		state.data.forEach(_=>{
 			if(_.child) {
-				_.child.forEach(_=>{map.set(_.zipcode,_.name)});
+				_.child.forEach(_=>{map.set(Number.parseInt(_.zipcode),_.name)});
 			}
 		})
 
@@ -37,15 +37,18 @@ const actions = {
 		if(d) {
 			commit('setCity', JSON.parse(d));
 		}else {
-			
-			rootState.axios
-				.get(url)
-				.then(response=>{
-					const arr = eval(`${response.data}`);
+			$.ajax({
+				type: 'GET',
+				axync: false,
+				dataType: 'text',
+				url,
+				success: response=>{
+					const arr = eval(`${response}`);
 					commit('setCity', arr);
 					rootState.tool.setLocal('city', JSON.stringify(arr));
-				})
-				.catch(error=>{console.log(error)});
+				},
+				error: error=>{console.log(error)},
+			})
 		}
 	}
 }

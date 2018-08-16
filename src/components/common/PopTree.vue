@@ -1,6 +1,6 @@
 <template>
   <div>
-	<el-dialog :title="title" :visible.sync="dialogVisible" v-show="false" ref="dialog" :modal="false">
+	<el-dialog :title="title" class="dialog-ss" :modal-append-to-body="true" :append-to-body="true" :visible.sync="dialogVisible" v-show="false" ref="dialog">
         <el-input
           placeholder="输入关键字进行过滤"
           v-model="filterText">
@@ -18,11 +18,12 @@
           :render-content="action ? renderContent : undefined"
           :expand-on-click-node="false"
           @node-click="handleClick"
+          default-expand-all
         >
         </el-tree>
         <div style="margin-top: 15px;">
-          <el-button type="primary" @click="treeSave">保存</el-button>
-          <el-button @click="treeCancel">取消</el-button>
+          <el-button type="primary" @click="treeSave" size="small">保存</el-button>
+          <el-button type="danger" @click="treeCancel" size="small">取消</el-button>
         </div>
   </el-dialog>
   <el-dialog :title="popTitle" :visible.sync="dialogPopVisible">
@@ -66,7 +67,7 @@ export default {
   				children: 'children',
   			}
   		}
-  	}, 
+  	},
   	'value': [String, Number, Array],
   	'multiple': {
   		type: Boolean,
@@ -103,6 +104,10 @@ export default {
   	// this.$refs.dialog.rendered = true;
   },
   methods: {
+    handleDisabled (data, node) {
+      console.log(data, node);
+      return true;
+    },
     handleClick (a,b,c) {
       this.$refs.tree.setChecked(a.id, !b.checked);
     },

@@ -17,30 +17,45 @@ export default {
 	},
 	methods: {
 		show ( type='add', data ) {
-  		this.type = type;
-     
-      this.dialogVisible = true;  
+
+  		const url = this.$options.URL;
       
+        
+      const setForm = _=>{
+        
+        this.type = type;
+        this.dialogVisible = true;
+        const copy = this.$tool.deepCopy(_);
+        this.$nextTick(_=>{
+          this.setForm ? this.setForm(copy) : this.$tool.coverObj(this.form, copy);
+        });
 
-     	this.$nextTick(_=>{
+        if(type == 'edit') {
+          this.id = copy.id;
+        }
+      }
 
+      if(data) {
+        //发送请求获取行数据
+        if(data instanceof String || typeof data == 'number') {
+          this.$axiosGet({
+            url: `${url}/${data}`,
+            success: _=>{
+              setForm(_.result);
+            }
+          })
+        }
 
-        this.$refs.form.resetFields();
- 	
+        //从缓存中获取行数据
+        if(data instanceof Object) {
+          setForm(data);
+        }
 
-	      if(type === 'edit'|| type === 'confirm') {
-          if(data instanceof Object) {
-            const copy = this.$tool.deepCopy(data);
-            this.id = copy.id;
-            this.$nextTick(_=>{
-              this.setForm ? this.setForm(data) : this.$tool.coverObj(this.form, copy);
-            });
-              
-          }else if(data instanceof String || data instanceof Number) {
-            data -= 0;
-          }	        
-	      }
-     	});
+      }else if(type == 'add') {
+        //当data不存在时,仅能弹出添加框
+        this.type = 'add';
+        this.dialogVisible = true;
+      }
   	},
     confirmCallback () {
       this.$message({message:'已确认收文',type:'success'});
@@ -99,6 +114,15 @@ export default {
           this.$axiosPut({url, data, success, complete});        
         }
       })
+    },
+    save () {
+      if(this.type == 'add') {
+        this.add();
+      }
+
+      if(this.type == 'edit') {
+        this.edit();
+      }
     },
     clear () {
       this.$refs.form.resetFields();

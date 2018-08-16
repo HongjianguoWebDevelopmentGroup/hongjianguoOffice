@@ -13,7 +13,7 @@
       :default-first-option="choose.defaultFirstOption !== undefined ? choose.defaultFirstOption : false"
   	  :multiple="!single"
   	  ref="select"
-  	  @visible-change.once="initialization"
+  	  @visible-change="initialization"
   	>
   		<el-option
   			v-for="item in option_in"
@@ -32,12 +32,12 @@ import AxiosMixins from '@/mixins/axios-mixins'
 const map = new Map([
 	['member', {
 		URL: '/api/members',
-		DATA_KEY: 'members',
+		DATA_KEY: 'result',
 		PLACEHOLDER: '请输入用户关键词',
 	}],
 	['applicant', {
 		URL: '/api/applicants',
-		DATA_KEY: 'applicants',
+		DATA_KEY: 'result',
 		PLACEHOLDER: '请输入申请人关键词',
 	}],
 	['inventor', {
@@ -102,10 +102,20 @@ const map = new Map([
     dynamicCreate: true,
     defaultFirstOption: true,
   }],
-  ['customer', {
-    URL: '/api/customers',
-    DATA_KEY: 'customers',
-    PLACEHOLDER: '请输入客户名',
+  ['client', {
+    URL: '/api/clients',
+    DATA_KEY: 'result',
+    PLACEHOLDER: '请输入客户名称',
+  }],
+  ['contact', {
+    URL: '/api/contacts',
+    DATA_KEY: 'result',
+    PLACEHOLDER: '请输入接口人名称'
+  }],
+  ['employee', {
+    URL: '/api/employees',
+    DATA_KEY: 'result',
+    PLACEHOLDER: '请输入内部人员名称',
   }]
 ]);
 
@@ -142,6 +152,7 @@ export default {
       loading: false, 
   		selected: [],
   		static_map: [],
+      initializationFlag: false,
   	};
   },
   methods: {
@@ -160,7 +171,10 @@ export default {
       }
     },
   	initialization () {
-      this.remoteMethod('');       
+      if(!this.initializationFlag) {
+        this.initializationFlag = true;
+        this.remoteMethod('');
+      }
   	},	
   	getSelected () {
   		return this.selected;
@@ -205,7 +219,7 @@ export default {
       const os = this.PARAMS;
       const key = this.DATA_KEY;
       const url = this.URL;
-      const data = os ? Object.assign({}, s, os) : s;
+      const data = Object.assign({}, s, os);
       const success = _=>{
         this.loading = false;
         _[key] = _[key].map(_=>{
@@ -309,7 +323,10 @@ export default {
       }
       
       this.refreshSelected(val);   
-  	}
+  	},
+    para () {
+      this.initializationFlag = false; //重置初始化标记
+    }
   },
   created () {
     this.refreshSelected(this.value2);

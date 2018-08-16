@@ -7,9 +7,8 @@
 	    :props="props"
 	    :value="value"
 	    :multiple="multiple"
-	    @update:value="handleValue" 
-	    ref="tree"
-	    :disabled="isDisabled"
+	    @update:value="handleValue"
+	    ref="tree"	    
 	  >
 	  </pop-tree>
 	</div>

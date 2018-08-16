@@ -65,26 +65,26 @@ menu.data = [
 			}
 		]
 	},
-	{
-		text: '提案',
-		path: '/proposal',
-		icon: 'iconfont icon-proposal',
-		type: 'submenu',
-		children: [
-			{
-				text: '新建提案',
-				path: '/proposal/add',
-				icon: 'iconfont icon-proposal-add',
-				type: 'item'
-			},
-			{
-				text: '提案列表',
-				path: '/proposal/list',
-				icon: 'iconfont icon-proposal',
-				type: 'item'
-			},
-		]
-	},
+	// {
+	// 	text: '提案',
+	// 	path: '/proposal',
+	// 	icon: 'iconfont icon-proposal',
+	// 	type: 'submenu',
+	// 	children: [
+	// 		{
+	// 			text: '新建提案',
+	// 			path: '/proposal/add',
+	// 			icon: 'iconfont icon-proposal-add',
+	// 			type: 'item'
+	// 		},
+	// 		{
+	// 			text: '提案列表',
+	// 			path: '/proposal/list',
+	// 			icon: 'iconfont icon-proposal',
+	// 			type: 'item'
+	// 		},
+	// 	]
+	// },
 	{
 		text: '专利',
 		path: '/patent',
@@ -156,7 +156,7 @@ menu.data = [
 				type: 'item'
 			},{
 				text: '商标管理',
-				icon: 'iconfont icon-trademarkfile',
+				icon: 'iconfont icon-trademark',
 				path: '/trademark/list',
 				type: 'item',
 			}]
@@ -164,18 +164,18 @@ menu.data = [
 	{
 		text: '项目',
 		path: '/business',
-		icon: '',
+		icon: 'iconfont	 icon-project',
 		type: 'submenu',
 		children: [
 			{
 				text: '新建项目',
 				path: '/business/add',
-				icon: '',
+				icon: 'iconfont icon-proposal-add',
 				type: 'item',
 			},{
 				text: '项目管理',
 				path: '/business/list',
-				icon: '',
+				icon: 'iconfont	 icon-project',
 				type: 'item',
 			}
 		]
@@ -205,17 +205,23 @@ menu.data = [
 				type: 'item',
 			},
 			{
-			text: '申请人管理',
-			path: '/applicantList',
-			icon: 'iconfont icon-proposer',
-			type: 'item',
-		},
-		{ 
-			text: '发明人管理',
-			path: '/inventorList',
-			icon: 'iconfont icon-proposer',
-			type: 'item',
-		},
+				text: '申请人管理',
+				path: '/client/applicant',
+				icon: 'iconfont icon-proposer',
+				type: 'item',
+			},
+			{ 
+				text: '发明人管理',
+				path: '/client/inventor',
+				icon: 'iconfont icon-proposer',
+				type: 'item',
+			},
+			{
+				text: '接口人管理',
+				path: '/client/contact',
+				icon: 'iconfont icon-proposer',
+				type: 'item',
+			}
 		]
 	},
 	{
@@ -269,8 +275,14 @@ menu.data = [
 			type: 'item'
 		},
 		{
-			text: '用户管理',
-			path: '/userList',
+			text: '人员管理',
+			path: '/setting/employee',
+			icon: 'iconfont icon-users',
+			type: 'item',
+		},
+		{
+			text: '账号管理',
+			path: '/setting/account',
 			icon: 'iconfont icon-users',
 			type: 'item',
 		},

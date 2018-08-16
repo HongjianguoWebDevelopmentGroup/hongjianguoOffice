@@ -78,6 +78,10 @@ const config = [
       { name: '发明+新型', id: 4 },
     ]
   }],
+  ['applicant_type', {
+    placeholder: '请选择申请人类型',
+    options: 'applicantType',//store/module/cache.js
+  }],
   ['copyright_type', {
     placeholder: '请选择版权类型',
     options: [

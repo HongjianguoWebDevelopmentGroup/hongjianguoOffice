@@ -111,6 +111,7 @@ export default {
       'refreshDetailData',
     ]),
     refreshDetail () {
+      if(!this.id) return;
       if(!this.type) return;
       if(!this.refreshSwitch) return;
       
@@ -142,8 +143,11 @@ export default {
       this.$emit('update:visible', val);
     }
   },
+  created () {    
+    this.refreshDetail();   
+  },
   watch: {
-  	id () {
+  	id (val) {
       if(this.type) {
   		  this.refreshDetail();
       }else {
