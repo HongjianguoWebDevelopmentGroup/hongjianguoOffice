@@ -81,6 +81,7 @@ const router = new Router({
     { path: '/patent', redirect: '/patent/list' },
     { path: '/trademark', redirect: '/trademark/list' },
     { path: '/client', redirect: '/client/list' },
+    { path: '/business', redirect: '/business/list'},
     { path: '/copyright', redirect: '/copyright/list' },
     { path: '/news', redirect: '/news/mailList' },
     { path: '/dispatch', redirect: '/dispatch/administration' },

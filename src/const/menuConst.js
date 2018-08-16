@@ -164,7 +164,8 @@ menu.data = [
 	{
 		text: '项目',
 		path: '/business',
-		icon: 'iconfont	 icon-project',
+		icon: 'iconfont icon-project',
+
 		type: 'submenu',
 		children: [
 			{
@@ -175,7 +176,7 @@ menu.data = [
 			},{
 				text: '项目管理',
 				path: '/business/list',
-				icon: 'iconfont	 icon-project',
+				icon: 'iconfont icon-projectmanage',
 				type: 'item',
 			}
 		]
