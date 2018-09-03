@@ -1,13 +1,13 @@
 <template>
-	      
-	<el-submenu v-if="dd.type == 'submenu' && !menusMap.get(dd.path) ? true : false" :index="dd.path">
+	      <!--  && !menusMap.get(dd.path)  -->
+	<el-submenu v-if="dd.type == 'submenu'? true : false" :index="dd.path">
 		<template slot="title"><i :class="dd.icon"></i>{{ dd.text }}</template>
 		<template v-if="forChildren(dd)">
 			<app-menu-item v-for="item in dd.children" :key="item.path" :dd="item"></app-menu-item>
 		</template>
 	</el-submenu>
 
-	<el-menu-item @click="handleClick" v-else-if="dd.type == 'item' && !menusMap.get(dd.path) ? true : false" :index="dd.path"><i :class="dd.icon"></i>{{ dd.text }}<span v-if="map[dd.path] != undefined">({{ getCount(dd.path) }})</span></el-menu-item>
+	<el-menu-item @click="handleClick" v-else-if="dd.type == 'item' ? true : false" :index="dd.path"><i :class="dd.icon"></i>{{ dd.text }}<span v-if="map[dd.path] != undefined">({{ getCount(dd.path) }})</span></el-menu-item>
 
 </template>
 

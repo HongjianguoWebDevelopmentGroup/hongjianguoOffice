@@ -214,7 +214,7 @@ export default {
 					'is_import': true,
 			  },] 
 			},
-			tableData: '',
+			tableData: [],
 			currentRow: '',
 			shrinkVisible: false,
 			filter: {},

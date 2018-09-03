@@ -2,7 +2,6 @@
   <div class="main">
     <strainer v-model="filter" @refresh="refresh"></strainer>
     <table-component :tableOption="tableOption" :data="tableData" @refreshTableData="refreshTableData" ref="table"></table-component>
-    
       <common-detail
         :title="currentRow.title"
         :visible.sync="shrinkVisible" 
@@ -17,6 +16,7 @@
 <script>
 import AxiosMixins from '@/mixins/axios-mixins'
 import TableComponent from '@/components/common/TableComponent'
+import AppTable from '@/components/common/AppTable'
 import Strainer from '@/components/page_extension/CopyrightList_strainer'
 import AppShrink from '@/components/common/AppShrink'
 import CommonDetail from '@/components/page_extension/Common_detail'
@@ -128,7 +128,8 @@ export default {
     TableComponent, 
     Strainer, 
     AppShrink, 
-    CommonDetail 
+    CommonDetail,
+    AppTable 
   }
 }
 </script>

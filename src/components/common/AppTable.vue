@@ -13,6 +13,8 @@
   @selection-change="handleSelectionChange" 
   @sort-change="_=>{$emit('sort-change', _)}"
   @row-click="handleRowClick"
+  @cell-click="handleCellClick"
+  @cell-mouse-enter="handleMouseEnter"
 >
   <template v-for="(col, index) in columns">
     
@@ -29,7 +31,7 @@
       </el-table-column>
     </template> -->
 
-    <template v-else-if="col.type == 'text'" >
+    <template v-else-if="col.type == 'text'">
       
       <template v-if="col.render ? true : false">
         <el-table-column :label="col.label" :prop="col.prop" :width="col.width ? col.width : ''" :min-width="col.min_width ? col.min_width : ''" :sortable="col.sortable ? 'custom' : false" :show-overflow-tooltip="col.overflow !== undefined ? col.overflow : true" :align="col.align !== undefined ? col.align :'left'" :header-align="col.header_align !== undefined ? col.header_align :'left'">
@@ -101,9 +103,9 @@
 
             <el-button v-else-if="btn.type == 'download'" :type="btn.btn_type ? btn.btn_type : 'text'" :key="index" :size="btn.size ? btn.size : 'mini'" icon="my-download" @click="handleActionCommand(btn.click, scope, $event)" >下载</el-button>
 
-            <el-button v-else-if="btn.type == 'view' && scope.row.isView" :type="btn.btn_type ? btn.btn_type : 'text'" :key="index" :size="btn.size ? btn.size : 'mini'" icon="view" @click="handleActionCommand(btn.click, scope, $event)" >查看</el-button>
+            <el-button v-else-if="btn.type == 'view' && (scope.row.isView || scope.row.is_view)" :type="btn.btn_type ? btn.btn_type : 'text'" :key="index" :size="btn.size ? btn.size : 'mini'" icon="view" @click="handleActionCommand(btn.click, scope, $event)" >查看</el-button>
 
-            <el-button v-else-if="btn.type == undefined || btn.type == 'custom'" :type="btn.btn_type ? btn.btn_type : ''" :key="index" :size="btn.size ? btn.size : 'mini'" :icon="btn.icon" @click="handleActionCommand(btn.click, scope, $event)">{{ btn.label }}</el-button>
+            <el-button v-else-if="btn.type == undefined || btn.type == 'custom'" :disabled="handleBtnBoolean(btn, scope.row, 'btn_disabled')" :type="btn.btn_type ? btn.btn_type : ''" :key="index" :size="btn.size ? btn.size : 'mini'" :icon="btn.icon" @click="handleActionCommand(btn.click, scope, $event)">{{ btn.label }}</el-button>
 
           </template>
         </template>
@@ -180,7 +182,8 @@ export default {
           })
         }
       })
-
+      // console.log('------------------------table-data------------------------');
+      // console.log(r);
       return r;
     },
     tableHeight () {
@@ -189,16 +192,31 @@ export default {
 
       if(hk !== undefined) {
         if(hk == 'default') {
-          height = this.innerHeight - 200;
+          height = this.innerHeight - 150;
           height = height < 300 ? 300 : height;
         }else if(hk == 'default2') {
-          height = this.innerHeight - 150;
+          height = this.innerHeight - 180;
           height = height < 300 ? 300 : height;
         }else if(hk === 'default3') {
           height = this.innerHeight - 100;
           height = height < 300 ? 300 : height;
         }else if(hk === 'default4') {
           height = this.innerHeight - 55;
+          height = height < 300 ? 300 : height;
+        }else if(hk === 'default5') {
+          height = this.innerHeight - 120;
+          height = height < 300 ? 300 : height;
+        }else if(hk === 'default6') {
+          height = (this.innerHeight - 285)/2;
+          height = height < 300 ? 300 : height;
+        }else if(hk === 'default7') {
+          height = (this.innerHeight - 256)/2;
+          height = height < 300 ? 300 : height;
+        }else if(hk === 'default8') {
+          height = (this.innerHeight - 100)/2;
+          height = height < 300 ? 300 : height;
+        }else if(hk === 'userList') {
+          height = this.innerHeight - 200;
           height = height < 300 ? 300 : height;
         }else {
           height = hk;
@@ -214,6 +232,14 @@ export default {
       if(column.type == 'selection' || column.type == 'action') return false;
           
       this.$emit('row-click', row, event, column);
+    },
+    handleCellClick (row, column, cell, event) {
+      event.stopPropagation();
+       if(column.type == 'selection' || column.type == 'action') return false;
+       this.$emit('cell-click',row, column, cell, event);
+    },
+    handleMouseEnter (row, column, cell, event) {
+      this.$emit('cell-mouse-enter',row, column, cell, event);
     },
     handleSelectionChange(s) { 
       this.selected = s;

@@ -18,18 +18,23 @@
       <div v-else style="color: #ccc; margin-top: 10px; margin-left: 20px;">暂无系统消息...</div>      
     </div>
     </el-popover>
-
-    <nav>
-        <img src="/static/static_img/hjg_logo.png" style="vertical-align: middle; height: 28px;">
-        <span class="logo_name">知识产权管理系统</span>
-        <el-dropdown  trigger="click" style="float: right; margin-right: 40px;" @command="handleCommond">
-          <span class="el-dropdown-link" style="color: #20a0ff; cursor: pointer;">
-            {{ username }}<i class="el-icon-caret-bottom el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown" >
-            <el-dropdown-item command="login_out">登出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+     <nav>
+        <div style="display: inline-block;vertical-align: top;">
+          <img src="/static/static_img/hjg_logo.png" style=" height: 27px;vertical-align: middle;">
+        </div>
+        <!-- <span class="logo_name">知识产权管理系统</span> -->
+        <div style="display: inline-block;">
+          <app-nav></app-nav>
+        </div>
+        <div style="position: absolute;top: 0;right: 0;overflow: hidden;">
+          <el-dropdown  trigger="click" style="float: right; margin-right: 40px;" @command="handleCommond">
+            <span class="el-dropdown-link" style="color: #20a0ff; cursor: pointer;">
+              {{ username }}<i class="el-icon-caret-bottom el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown" >
+              <el-dropdown-item command="login_out">登出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         
         <img 
           v-popover:popover  
@@ -38,28 +43,31 @@
           :src="sysmesg.length != 0 ? '/static/static_img/news_in.png' : '/static/static_img/news.png'"
         />        
           <el-badge :value="pendingTaskCount" class="task-pending-top">
-            <el-button size="mini" style="padding: 7px 10px;" icon="el-icon-warning" type="primary" @click="$router.push('/task/pending')" title="待办任务"></el-button>
-          </el-badge>          
+            <el-button size="mini" icon="warning" type="primary" @click="$router.push('/task/pending')" title="待办任务"></el-button>
+          </el-badge>
+        <a target="_blank" href="http://help.hongjianguo.com" style="margin-right:20px;
+    font-size: 14px;">帮助</a>       
+        </div>   
     </nav>
       <span class="nav-left-btn" @click="navToggle"><span class="nav-left-btn-arrow el-icon-arrow-left"></span></span>
       <div class="nav-left" :style="`height: ${innerHeight}px`">
         
+     <!--      v-if="menusMap != null"  -->
         <el-menu 
-          v-if="menusMap != null" 
           router 
           unique-opened 
-          :default-active="select.path"
+          :default-active="leftMenuActive"
           background-color="#324157"
           text-color="#bfcbd9"
           active-text-color="#20a0ff"
         >
-          <app-menu-item v-for="item in menu_data" :dd="item" :key="item.path"></app-menu-item>
+          <app-menu-item v-for="item in menuData" :dd="item" :key="item.path"></app-menu-item>
         </el-menu>
 
       </div>
     <div class="container" v-loading="loading" :element-loading-text="loadingText" :style="`min-height: ${innerHeight-10}px; padding: 10px 15px 0; background-color: #F9FAFC;`">
       <!-- <h1 class="container-menu"><i :class="select.icon"></i><span>{{ select.text }}</span></h1> -->
-      <div class="container-nav">
+      <div class="container-nav" v-if="!noMenu">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item v-for="item in select_arr" :to="item.path" :key="item.path">
             <i :class="item.icon"></i>{{ item.text }}
@@ -89,7 +97,7 @@
 
 <script>
 import AxiosMixins from '@/mixins/axios-mixins'
-
+import AppNav from '@/components/common/AppNav'
 import AgencyLoad from '@/components/form/AgencyLoad'
 
 import menu from '@/const/menuConst'
@@ -100,27 +108,25 @@ export default {
   name: 'app',
   mixins: [ AxiosMixins ],
   computed: {
-    select () {
-      const d = this;
-      let path = d.$route.path;
-      const params = d.$route.params;
+    path () {
+      let path = this.$route.path;
       path = path.split("__")[0];
-      
-      return menu.map[path];
+      return path;
     },
     select_arr () {
       const d = this;
       const arr = [];
-      let path = d.$route.path;
+      const path = this.path;
       const params = d.$route.params;
-
-      path = path.split("__")[0];
 
       const arr2 = path.split("/");
 
       for(let i = 0; i < arr2.length; i++) {
         const str = i == 0 ? "/" : arr2.slice(0, i+1 ).join("/");
-        arr.push(menu.map[str]);
+        const item = this.menuDataMap[str];
+        if(item) {
+          arr.push(item);
+        }
       }
 
       return arr;
@@ -143,6 +149,10 @@ export default {
       'leftVisible',
       'agencyLoadVisible',
       'menusMap',
+      'menuData',
+      'menuDataMap',
+      'menuType',
+      'noMenu',
       'pendingTaskCount',
     ]),
   },
@@ -153,6 +163,7 @@ export default {
       sysPopVisible: false,
       windowLock: false,
       userinfoLoading: true,
+      leftMenuActive: '',
     };
   },
   methods: {
@@ -250,7 +261,21 @@ export default {
   },
   components: { 
     AppMenuItem,
-    AgencyLoad, 
+    AgencyLoad,
+    AppNav 
+  },
+  watch: {
+    //路径更改 左侧菜单自东变更active项
+    path (val) {
+      this.leftMenuActive = val; 
+    },
+    //解决菜单切换时 左侧菜单的active项为空
+    menuType () {
+      this.leftMenuActive = '';
+      this.$nextTick(() => {
+        this.leftMenuActive = this.path;
+      });
+    }
   }
 }
 </script>
@@ -445,6 +470,9 @@ nav {
 }
 /*这里放入重写element-ui样式的内容*/
 #app {
+  .el-menu--horizontal {
+    border: none;
+  }
   .el-menu {
     border-right: none;
   }
