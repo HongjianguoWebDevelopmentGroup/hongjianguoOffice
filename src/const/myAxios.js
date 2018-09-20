@@ -1,4 +1,3 @@
-import qs from 'qs'
 export default {
 	install (Vue, options) {
 		Vue.prototype.$axiosGet = axiosGet;
@@ -104,9 +103,7 @@ function axiosPost ({ url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}
 function axiosPut ({ url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}, error=_=>{errorFunc(_, this)}, catchFunc=_=>{catchFunct(_, this)}, complete=_=>{completeFunc(_, this)} }) {
   url = status ? url.replace(/\/api/, '') : url;
   
-  const res = this.$axios.put(url, qs.stringify(data),{header:{
-  'Content-Type': 'application/x-www-form-urlencoded'
-  }});
+  const res = this.$axios.put(url,data)
   res
     .then(response=>{
       const d = response.data;
