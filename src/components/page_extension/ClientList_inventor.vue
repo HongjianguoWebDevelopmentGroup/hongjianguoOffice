@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
-		<pop @refresh="refresh" ref="pop" :customer-id="customerId"></pop>
+		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
 	</div>
 </template>
 <script>
@@ -10,8 +10,8 @@ import Pop from '@/components/page_extension/RequirementList_pop'
 import {mapGetters} from 'vuex'
 const URL = '/api/requirements';
 export default {
-	name: 'requirementList',
-	props: ['customerId'],
+	name: 'clientlistInventor',
+	props: ['customer'],
 	data () {
 		return {
 			option: {

@@ -92,7 +92,7 @@ export default {
         'postcode': { required: true, message: '邮编不能为空', trigger: 'blur' },
         'email_address': [{ required: true, message: '客户名称不能为空', trigger: 'blur'},
                       { min: 1, max: 200, message: '长度不超过200个字符', trigger: 'blur'},
-                    { pattern: /^[^~!@#$%^&*]+$/, message: '地址不能包含非法字符', trigger: 'blur' }],
+                    { pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, message: '邮件地址格式不正确', trigger: 'blur' }],
         'phone_number': { pattern: /(^[0-9]{3,4}\-[0-9]{7,8})$|(^[0-9]{3,4}\-[0-9]{7,8})(-\d{1,6}?$)|^1[3|4|5|7|8][0-9]{9}$/, message: '手机号码或者座机号码格式错误', trigger: 'blur' },
         'address': [{ required: true, message: '客户名称不能为空', trigger: 'blur'},
                    { min: 1, max: 200, message: '长度不超过200个字符', trigger: 'blur'},

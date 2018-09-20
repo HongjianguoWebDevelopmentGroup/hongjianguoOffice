@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
+		<table-component :data="tableData" :tableOption="option" ref="table"></table-component>
 		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
 	</div>
 </template>
@@ -75,28 +75,6 @@ export default {
 			})
 	},
 	methods: {
-		refreshTableData (option) {
-			const url = `${URL}/${this.customer.id}`;
-			// const data = Object.assign({},option);
-			const success = _=>{
-				this.tableData = _.requirements;
-			}
-			// this.$axiosGet({url, data, success});
-			this.$axiosGet({
-				url: url,
-				data: Object.assign({}, option),
-				success,
-			})
-			// this.$axiosGet({
-			// 	url: URL,
-			// 	data: {
-			// 		'customer': this.customer,
-			// 	},
-			// 	success:  _=>{
-					
-			// 	}
-			// })
-		},
 		addPop () {
 			this.$refs.pop.show();
 		},
@@ -106,8 +84,8 @@ export default {
 		editPop (row) {
 			this.$refs.pop.show('edit', row);
 		},
-		clientDelete ({id}) {
-			const url = `${URL}/${id}`;
+		clientDelete () {
+			const url = `${URL}/${this.customer.id}`;
 			this.$confirm(
 				'此操作将永久删除该信息, 是否继续?', '提示', {
 				confirmButtonText: '确定',
@@ -115,16 +93,16 @@ export default {
 				type: 'warning'
 			}).then(()=>{
 				const success = _=>{ 
-				this.update();
-				this.$message({message: '删除成功', type: 'success'}) 
+					this.update();
+					this.$message({message: '删除成功', type: 'success'}) 
 			};
 
 				this.axiosDelete({url, success});
 			}).catch(()=>{
-			this.$message({
-				type: 'info',
-				message: '已取消删除！'
-			})
+				this.$message({
+					type: 'info',
+					message: '已取消删除！'
+				})
 			})
 		},
 	},
