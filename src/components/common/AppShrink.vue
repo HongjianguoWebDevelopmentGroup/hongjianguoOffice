@@ -27,6 +27,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		modal: {
+			type: Boolean,
+			default: false,
+		},
 		title: {
 			type: String,
 			default: '标题',

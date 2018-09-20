@@ -1,3 +1,4 @@
+import qs from 'qs'
 export default {
 	install (Vue, options) {
 		Vue.prototype.$axiosGet = axiosGet;
@@ -34,6 +35,8 @@ const catchFunct = function (err, t) {
 }
 
 const completeFunc = function (d, t) {}
+
+// const storages = window.localStorage.getItem("token");
 //------------------默认配置项end-------------------------
 
 function axiosGet ({url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}, error=_=>{errorFunc(_, this)}, catchFunc=_=>{catchFunct(_, this)}, complete=_=>{completeFunc(_, this)} }) {
@@ -43,11 +46,11 @@ function axiosGet ({url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}, 
   res
     .then(response=>{
       const d = response.data;
-      if(d.status == -1) {
-        window.location.href = '/login';
-        return false;
-        // console.log(url);
-      }
+      // if(d.status == -1) {
+      //   window.location.href = '/login';
+      //   return false;
+      //   // console.log(url);
+      // }
       d.status > 0 ? success(d) : error(d);
   
       complete(d);
@@ -101,7 +104,9 @@ function axiosPost ({ url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}
 function axiosPut ({ url=URLDEFAULT, data=dd, success=_=>{successFunc(_, this)}, error=_=>{errorFunc(_, this)}, catchFunc=_=>{catchFunct(_, this)}, complete=_=>{completeFunc(_, this)} }) {
   url = status ? url.replace(/\/api/, '') : url;
   
-  const res = this.$axios.put(url, data);
+  const res = this.$axios.put(url, qs.stringify(data),{header:{
+  'Content-Type': 'application/x-www-form-urlencoded'
+  }});
   res
     .then(response=>{
       const d = response.data;

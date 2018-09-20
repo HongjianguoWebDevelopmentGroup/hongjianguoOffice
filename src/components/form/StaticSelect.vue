@@ -54,6 +54,15 @@ const config = [
       {name: '版权', id: 3},
     ]
   }],
+  ['market',{
+    placeholder: '所属销售',
+    options: [
+      {name: '请选择所属销售', id: ''},
+      {name: '晓哲', id: 1},
+      {name: '琦琦', id: 2},
+      {name: '石头', id: 3},
+    ]
+  }],
   ['agency_scope', {
     placeholder: '请选择代理机构业务范围',
     options: [

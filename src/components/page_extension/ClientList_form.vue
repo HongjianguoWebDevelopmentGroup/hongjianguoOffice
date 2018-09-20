@@ -2,51 +2,49 @@
 
   <el-form :model="form" label-width="100px" ref="form" :rules="rules">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="24">
         <el-form-item label="客户名称" prop="name">
           <el-input v-model="form.name" ></el-input>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
-        <el-form-item label="英文名称" prop="en_name" >
-          <el-input v-model="form.en_name" ></el-input>
+      <el-col :span="24">
+        <el-form-item label="客户代码" prop="consultant_id" >
+          <el-input v-model="form.consultant_id" ></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="12">
-        <el-form-item label="客户国籍" prop="area">
-          <static-select type="area" v-model="form.area"></static-select>
+      <el-col :span="24">
+        <el-form-item label="所属销售" prop="sales_id">
+          <static-select type="market" v-model="form.sales_id"></static-select>
         </el-form-item>
       </el-col>
-      <el-col :span="12">
-        <el-form-item label="省份城市" prop="province_city">
-          <city v-model="form.province_city"></city>
+      <el-col :span="24">
+        <el-form-item label="联系人" prop="linkman">
+          <el-input v-model="form.linkman"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
-    <el-form-item label="联系人" prop="contact">
-      <el-input v-model="form.contact"></el-input>
+    <el-form-item label="地址" prop="address">
+      <el-input v-model="form.address"></el-input>
     </el-form-item>
     <el-row>
-      <el-col :span="12">
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email"></el-input>  
+      <el-col :span="24">
+        <el-form-item label="邮箱" prop="email_address">
+          <el-input v-model="form.email_address"></el-input>  
         </el-form-item>
       </el-col>
-      <el-col :span="12">
-        <el-form-item label="手机号" prop="phone_number">
+      <el-col :span="24">
+        <el-form-item label="电话" prop="phone_number">
           <el-input v-model="form.phone_number"></el-input> 
         </el-form-item>
       </el-col>
     </el-row>    
-    <el-form-item label="详细地址" prop="address">
-      <el-input type="textarea" v-model="form.address"></el-input>
+    <el-form-item label="备注" prop="remark">
+      <el-input type="textarea" v-model="form.remark"></el-input>
     </el-form-item>
     <el-form-item style="margin-bottom: 0;">
-      <el-button type="primary" @click="add" v-if="popType == 'add'" size="small">确定</el-button>
-      <el-button type="primary" @click="edit" v-if="popType == 'edit'" size="small">编辑</el-button>
-      <el-button @click="dialogVisible = false" size="small">取消</el-button>
+      <el-button type="primary" @click="formSave" v-if="popType == 'edit'" size="small">保存</el-button>
     </el-form-item>
   </el-form>
 
@@ -58,44 +56,47 @@ import RemoteSelect from '@/components/form/RemoteSelect'
 import StaticSelect from '@/components/form/StaticSelect'
 import City from '@/components/form/City'
 
+const URL = '/api/customers';
+
 export default {
   name: 'clientListForm',
   mixins: [ PopMixins ],
-  props: {
-    'popType': {
-      type: String, 
-      default: 'add',
-    },
-  },
+  props:['popType', 'customer'],
   data () {
     return {
       form: {
-        area: '',
         name: '',
-        en_name: '',
-        province_city: [],
+        consultant_id: '',
+        sales_id: '',
         address: '',
-        contact: '',
         phone_number: '',
-        email: '',
+        email_address: '',
       },
       'rules': {
-        'area': { required: true, message: '客户国籍不能为空', trigger: 'change'},
+        'sales_id': { required: true, message: '销售类型不能为空', trigger: 'change'},
         'name': [{ required: true, message: '客户名称不能为空', trigger: 'blur'},
                  { min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
-                 { pattern: /^[^~!@#$%^&*]+$/, message: '客户名不能包含非法字符', trigger: 'blur' }],
-        'en_name': [{ min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
-                    { pattern: /^[^~!@#$%^&*]+$/, message: '客户英文名不能包含非法字符', trigger: 'blur' }],
+                 { pattern: /^[^~!@#$%^&*]+$/, message: '客户名称不能包含非法字符', trigger: 'blur' }],
+        'consultant_id': [{ min: 1, max: 50, message: '长度不超过50个字符', trigger: 'blur'},
+                    { pattern: /^[^~!@#$%^&*]+$/, message: '客户代码不能包含非法字符', trigger: 'blur' }],
         'address': [{ min: 1, max: 200, message: '长度不超过200个字符', trigger: 'blur'},
                     { pattern: /^[^~!@#$%^&*]+$/, message: '地址不能包含非法字符', trigger: 'blur' }],
-        'contact': [{ min: 1, max: 10, message: '长度不超过10个字符', trigger: 'blur'},
-                    { pattern: /^[^~!@#$%^&*]+$/, message: '联系人不能包含非法字符', trigger: 'blur' }],
-        'email': { pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, message: '邮箱格式错误', trigger: 'blur' },
+        'email_address': { pattern: /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, message: '邮箱格式错误', trigger: 'blur' },
         'phone_number': { pattern: /(^[0-9]{3,4}\-[0-9]{7,8})$|(^[0-9]{3,4}\-[0-9]{7,8})(-\d{1,6}?$)|^1[3|4|5|7|8][0-9]{9}$/, message: '手机号码或者座机号码格式错误', trigger: 'blur'},
       },
       dialogVisible: false,
       editPsd: false,
     }
+  },
+  created(){
+    let data = this.customer;
+    this.form.name = data.name;
+    this.form.consultant_id = data.consultant_id;
+    this.form.sales_id = data.sales_id;
+    this.form.address = data.address;
+    this.form.email_address = data.email_address;
+    this.form.phone_number = data.phone_number;
+    this.form.market = data.market;
   },
   methods: {
     setForm (data) {
@@ -123,6 +124,15 @@ export default {
         }
       }
       return o;
+    },
+    formSave () {
+      console.log(this.customer);
+      const url = `${URL}/${this.customer.id}`;
+      const data = Object.assign({},this.form);
+      const success = _=>{
+      	this.$refs.table.update();
+      }
+      this.$axiosPut({url, data, success});
     }
   },
   components: { 
@@ -130,8 +140,8 @@ export default {
     StaticSelect,
     City,
   },
-  URL: '/api/clients',
-  REMINDER_TEXT: '客户',
+  // URL: '/api/clients',
+  // REMINDER_TEXT: '客户',
 }
 </script>
 

@@ -38,6 +38,7 @@ const store = new Vuex.Store({
     leftNavVisible: true,
     agencyLoadVisible: false,
     importLoading: false,
+    token:''
   },
   modules: {
     filter,
@@ -114,7 +115,17 @@ const store = new Vuex.Store({
     },
     setImportLoading(state, boolean) {
       state.importLoading = boolean;
+    },
+    set_token(state, token) {
+      stote.token = token;
+      window.localStorage.token = token;
+    },
+    
+    del_token(state) {
+      state.token = ''
+      window.localStorage.removeItem('token')
     }
+  
   },
   actions: {
     onShrinkLoading({state, commit},text="加载中...") {
