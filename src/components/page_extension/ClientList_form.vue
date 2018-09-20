@@ -71,6 +71,8 @@ export default {
         address: '',
         phone_number: '',
         email_address: '',
+        remark: '',
+        linkman: '',
       },
       'rules': {
         'sales_id': { required: true, message: '销售类型不能为空', trigger: 'change'},
