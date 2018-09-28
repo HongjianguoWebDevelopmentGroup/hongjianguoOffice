@@ -1,21 +1,20 @@
 <template>
 	<div>
-		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
-		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
+		<table-component :data="inventorData" :tableOption="option" ref="table"></table-component>
+		<pop @refresh="refresh" ref="pop" :customer="customer" :presentData = inventorData></pop>
 	</div>
 </template>
 <script>
 import TableComponent from '@/components/common/TableComponent'
 import Pop from '@/components/page_extension/RequirementList_pop'
 import {mapGetters} from 'vuex'
-const URL = '/api/requirements';
 export default {
 	name: 'clientlistInventor',
-	props: ['customer'],
+	props: ['customer','itemData'],
 	data () {
 		return {
 			option: {
-				name: 'requirementList',
+				name: 'clientlistInventor',
                 url: URL,
                 is_search: true,
 				header_btn: [
@@ -25,16 +24,16 @@ export default {
 					{ type: 'selection' },
 					{ 
 						type: 'text', 
-						prop: 'type', 
+						prop: 'name', 
 						label: '发明人姓名',
-						render_text: _=>this.caseMap.get(Number.parseInt(_)),
+						// render_text: _=>this.caseMap.get(Number.parseInt(_)),
 					},
-					{ type: 'text', prop: 'province', label: '国籍' },
-					{ type: 'text', prop: 'city', label: '证件号码' },
-					{ type: 'text', prop: 'proposer_name', label: '电话', width: '160' },
-					{ type: 'text', prop: 'proposer_type', label: '邮箱', width: '160' },
+					{ type: 'text', prop: 'citizenship', label: '国籍' },
+					{ type: 'text', prop: 'identity', label: '证件号码' },
+					{ type: 'text', prop: 'phone_number', label: '电话', width: '160' },
+					{ type: 'text', prop: 'email_address', label: '邮箱', width: '160' },
 					{ type: 'text', prop: 'id_number', label: '英文姓名' },
-					{ type: 'text', prop: 'location', label: '不公开姓名' },
+					{ type: 'text', prop: 'is_publish_name', label: '不公开姓名' },
 					{ 
 						type: 'action',
 						width: '100',
@@ -49,12 +48,7 @@ export default {
 				is_pagination: false,
 				is_border: false,			
 			},
-			tableData: [
-				{
-					id:0,
-					name:'kdsaokd'
-				}
-			],
+			inventorData: [],
 		};
 	},
 	computed: {
@@ -63,17 +57,6 @@ export default {
 		]),
 	},
 	methods: {
-		refreshTableData () {
-			this.$axiosGet({
-				url: URL,
-				data: {
-					'customer_id': this.customerId,
-				},
-				success:  _=>{
-					this.tableData = _.requirements;
-				}
-			})
-		},
 		addPop () {
 			this.$refs.pop.show();
 		},
@@ -84,7 +67,7 @@ export default {
 			this.$refs.pop.show('edit', row);
 		},
 		clientDelete ({id}) {
-			const url = `${URL}/${id}`;
+			const url = `${URL}/${this.customer.id}/applicants/${this.itemData.id}`;
 			this.$confirm(
 				'此操作将永久删除该信息, 是否继续?', '提示', {
 				confirmButtonText: '确定',
@@ -94,16 +77,21 @@ export default {
 				const success = _=>{ 
 				this.update();
 				this.$message({message: '删除成功', type: 'success'}) 
+				this.axiosDelete({url, success});
 			};
 
-				this.axiosDelete({url, success});
 			}).catch(()=>{
-			this.$message({
-				type: 'info',
-				message: '已取消删除！'
-			})
+				this.$message({
+					type: 'info',
+					message: '已取消删除！'
+				})
 			})
 		},
+	},
+	watch:{
+		itemData(){
+			this.inventorData = this.itemData;
+		}
 	},
 	components: {
 		TableComponent,

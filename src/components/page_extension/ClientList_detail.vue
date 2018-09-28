@@ -1,27 +1,27 @@
 <template>
-	<el-tabs v-model="activeName">
-    <el-tab-pane label="基本信息" name="first">
-    	<first  popType="edit" :customer="row" @refresh="handleRefresh"></first>
-    </el-tab-pane>
-    <el-tab-pane label="申请人" name="proposer">
-    	<detail-proposer  :customer="row"></detail-proposer>
-    </el-tab-pane>
-    <el-tab-pane label="发明人" name="inventor">
-    	<detail-inventor  :customer="row"></detail-inventor>
-    </el-tab-pane>
-	<el-tab-pane label="联系人" name="linkman">
-    	<detail-linkman  :customer="row"></detail-linkman>
-    </el-tab-pane>
-	<el-tab-pane label="合同" name="contract">
-    	<detail-contract  :customer="row"></detail-contract>
-    </el-tab-pane>
-	<el-tab-pane label="报价单" name="quotation">
-    	<detail-quotation  :customer="row"></detail-quotation>
-    </el-tab-pane>
-	<el-tab-pane label="客户备注" name="remark">
-    	<detail-remark  :customer="row"></detail-remark>
-    </el-tab-pane>
-  </el-tabs>
+	<el-tabs v-model="activeName" @tab-click="renderer">
+		<el-tab-pane label="基本信息" name="first">
+			<first  popType="edit" :customer="row" @refresh="handleRefresh"></first>
+		</el-tab-pane>
+		<el-tab-pane label="申请人" name="applicants">
+			<detail-proposer :customer="row" :itemData="appData"></detail-proposer>
+		</el-tab-pane>
+		<el-tab-pane label="发明人" name="inventors">
+			<detail-inventor :customer="row"  :itemData="inventorsData"></detail-inventor>
+		</el-tab-pane>
+		<el-tab-pane label="联系人" name="contacts">
+			<detail-linkman  :customer="row" :itemData="contactsData"></detail-linkman>
+		</el-tab-pane>
+		<el-tab-pane label="合同" name="contracts">
+			<detail-contract  :customer="row" :itemData="contractsData"></detail-contract>
+		</el-tab-pane>
+		<el-tab-pane label="报价单" name="quotation">
+			<detail-quotation  :customer="row"></detail-quotation>
+		</el-tab-pane>
+		<el-tab-pane label="客户备注" name="remarks">
+			<detail-remark  :customer="row"></detail-remark>
+		</el-tab-pane>
+	</el-tabs>
 </template>
 <script>
 import First from '@/components/page_extension/ClientList_form'
@@ -40,6 +40,10 @@ export default {
 		return {
 			activeName: 'first',
 			map: {},
+			appData:[],
+			inventorsData:[],
+			contactsData:[],
+			contractsData:[]
 		}
 	},
 	methods: {
@@ -61,6 +65,52 @@ export default {
 		},
 		handleRefresh () {
 			this.$emit('refresh');
+		},
+		
+		renderer(tab, event){
+			if(tab.name != 'first'){
+				const url = `/api/customers/${this.row.id}/${tab.name}`;
+				
+				const success = _=>{
+					if(this.appData.length == 0) {
+						if(tab.name == 'applicants') {
+							let initialData = _.data.data;
+							for(let i = 0; i < initialData.length; i++) {
+								this.appData.push(initialData[i]);
+							}
+						}
+					}
+					if(this.inventorsData.length == 0) {
+						if(tab.name == 'inventors') {
+							let initialData = _.inventors.data;
+							for(let i = 0; i < initialData.length; i++) {
+								this.inventorsData.push(initialData[i]);
+							}
+						}
+					}
+					if(this.contactsData.length == 0) {
+						if(tab.name == 'contacts') {
+							let initialData = _.Contacts.data;
+							for(let i = 0; i < initialData.length; i++) {
+								this.contactsData.push(initialData[i]);
+							}
+						}
+					}
+					if(this.contactsData.length == 0) {
+						if(tab.name == 'orders') {
+							let initialData = _.Contacts.data;
+							for(let i = 0; i < initialData.length; i++) {
+								this.contractsData.push(initialData[i]);
+							}
+						}
+					}								
+				}
+				this.$axiosGet({
+					url: url,
+					data: Object.assign({}),
+					success,
+				})	
+			}
 		}
 	},
 	watch: {

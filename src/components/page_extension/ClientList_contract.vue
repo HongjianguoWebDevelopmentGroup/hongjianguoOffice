@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
-		<pop @refresh="refresh" ref="pop" :customer-id="customerId"></pop>
+		<table-component :data="tableData" :tableOption="option" ref="table"></table-component>
+		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
 	</div>
 </template>
 <script>
@@ -11,7 +11,7 @@ import {mapGetters} from 'vuex'
 const URL = '/api/requirements';
 export default {
 	name: 'requirementList',
-	props: ['customerId'],
+	props: ['customer','itemData'],
 	data () {
 		return {
 			option: {
@@ -49,12 +49,7 @@ export default {
 				is_pagination: false,
 				is_border: false,			
 			},
-			tableData: [
-				{
-					id:0,
-					name:'kdsaokd'
-				}
-			],
+			tableData: [],
 		};
 	},
 	computed: {
@@ -63,17 +58,6 @@ export default {
 		]),
 	},
 	methods: {
-		refreshTableData () {
-			this.$axiosGet({
-				url: URL,
-				data: {
-					'customer_id': this.customerId,
-				},
-				success:  _=>{
-					this.tableData = _.requirements;
-				}
-			})
-		},
 		addPop () {
 			this.$refs.pop.show();
 		},
@@ -101,6 +85,11 @@ export default {
 			})
 			})
 		},
+	},
+	watch:{
+		itemData(){
+			this.tableData.push(this.itemData);
+		}
 	},
 	components: {
 		TableComponent,

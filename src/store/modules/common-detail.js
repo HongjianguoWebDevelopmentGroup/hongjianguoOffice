@@ -2,6 +2,7 @@ const keys = new Map([
 	['patent', 'patent'],
 	['copyright', 'Copyright'],
 	['trademark', 'trademark'],
+	// ['applicant', 'applicant'],
 ]);
 
 const state = {
@@ -36,17 +37,25 @@ const getters = {
   		return null;
   	}
   },
+//   detailBaseApplicant: state=>{
+// 	if(state.true_type == 'applicant') {
+// 		return state.data;
+// 	}else {
+// 		return null;
+// 	}
+// },
   detailTasks: state=>state.data ? state.data.tasks : [],
   detailNotices: state=>state.data ? state.data.notices : [],
   detailFees: state=>state.data ? state.data.fees : [],
   detailMails: state=>state.data ? state.data.mails : [],
   detailDocuments: state=>state.data ? state.data.documents : [],
+  applicantData: state=>state.data ? state.data.applicants : [],
   detailLoading: state=>state.loading,
 }
 
 const mutations = {
 	setDetailType: (state, path)=>{
-		const arr = ['patent', 'trademark', 'copyright'];
+		const arr = ['patent', 'trademark', 'copyright','applicant'];
 		for(let a of arr) {
 			const reg = new RegExp(a);
 			if(reg.test(path)) {

@@ -61,7 +61,7 @@ const URL = '/api/customers';
 export default {
   name: 'clientListForm',
   mixins: [ PopMixins ],
-  props:['popType', 'customer'],
+  props:['popType', 'customer','shrinkVisible'],
   data () {
     return {
       form: {
@@ -93,7 +93,7 @@ export default {
   created(){
     let data = this.customer;
     this.form.name = data.name;
-    this.form.consultant_id = data.consultant_id;
+    this.form.consultant_id = data.id;
     this.form.sales_id = data.sales_id;
     this.form.address = data.address;
     this.form.email_address = data.email_address;
@@ -128,11 +128,12 @@ export default {
       return o;
     },
     formSave () {
-      console.log(this.customer);
       const url = `${URL}/${this.customer.id}`;
       const data = Object.assign({},this.form);
       const success = _=>{
-      	this.$refs.table.update();
+        // this.shrinkVisible = false;
+        this.$emit('refreshTableData');
+        this.$message({message: '更新客户成功！', type: 'success'})
       }
       this.$axiosPut({url, data, success});
     }

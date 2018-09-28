@@ -63,6 +63,13 @@ const config = [
       {name: '石头', id: 3},
     ]
   }],
+  ['records',{
+    placeholder: '请选择费减备案状态',
+    options: [
+      {name: '0', id: 1},
+      {name: '2', id: 2},
+    ]
+  }],
   ['agency_scope', {
     placeholder: '请选择代理机构业务范围',
     options: [

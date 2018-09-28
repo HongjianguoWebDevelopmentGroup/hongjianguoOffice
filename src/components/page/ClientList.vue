@@ -37,7 +37,7 @@ export default {
 					{ type: 'import' },
 		  	  { type: 'export' },
           { type: 'control' },
-          // { type: 'filter', click: ()=>{ this.filterPopUp } },
+          { type: 'filter', click: ()=>{ this.filterPopUp } },
           
 		  	],
 		  	'columns': [
@@ -105,7 +105,9 @@ export default {
   		}
   	},
   	refreshTableData(option) {
+			console.log(option);
   		const success = _=>{
+				console.log(_);
 				this.tableData = _.data;  
 			}
   		this.$axiosGet({
@@ -130,7 +132,6 @@ export default {
       this.update();
     },
   	handleRowClick (row) {
-			console.log(row)
   		this.currentRow = row;
   		if(!this.shrinkVisible) {
   			this.shrinkVisible = true;	

@@ -1,21 +1,21 @@
 <template>
 	<div>
-		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
-		<pop @refresh="refresh" ref="pop" :customer-id="customerId"></pop>
+		<table-component :data="tableData" :tableOption="option" ref="table"></table-component>
+		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
 	</div>
 </template>
 <script>
 import TableComponent from '@/components/common/TableComponent'
 import Pop from '@/components/page_extension/RequirementList_pop'
 import {mapGetters} from 'vuex'
-const URL = '/api/requirements';
+
 export default {
-	name: 'requirementList',
-	props: ['customerId'],
+	name: 'clientlistLinkman',
+	props: ['customer','itemData'],
 	data () {
 		return {
 			option: {
-				name: 'requirementList',
+				name: 'clientlistLinkman',
                 url: URL,
                 is_search: true,
 				header_btn: [
@@ -46,12 +46,7 @@ export default {
 				is_pagination: false,
 				is_border: false,			
 			},
-			tableData: [
-				{
-					id:0,
-					name:'kdsaokd'
-				}
-			],
+			tableData: [],
 		};
 	},
 	computed: {
@@ -60,17 +55,6 @@ export default {
 		]),
 	},
 	methods: {
-		refreshTableData () {
-			this.$axiosGet({
-				url: URL,
-				data: {
-					'customer_id': this.customerId,
-				},
-				success:  _=>{
-					this.tableData = _.requirements;
-				}
-			})
-		},
 		addPop () {
 			this.$refs.pop.show();
 		},
@@ -80,7 +64,8 @@ export default {
 		editPop (row) {
 			this.$refs.pop.show('edit', row);
 		},
-		clientDelete ({id}) {
+		clientDelete (row) {
+			
 			const url = `${URL}/${id}`;
 			this.$confirm(
 				'此操作将永久删除该信息, 是否继续?', '提示', {
@@ -101,6 +86,12 @@ export default {
 			})
 			})
 		},
+	},
+	watch:{
+		itemData(){
+			this.tableData = this.itemData;
+			console.log(this.tableData)
+		}
 	},
 	components: {
 		TableComponent,

@@ -172,7 +172,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'tableComponent',
   mixins: [ AxiosMixins ],
-  props: ['tableOption', 'data', 'tableStyle', 'refreshProxy', 'filter'],
+  props: ['tableOption', 'data', 'tableStyle', 'refreshProxy','refreshTableData', 'filter'],
   data () {
     const d = this;
     const cols = d.tableOption.columns;
@@ -578,6 +578,9 @@ export default {
       return this.$refs.table.getSelected(flag);
     },
     update () {
+      if(this.refreshTableData) {
+        this.refreshTableData(Object.assign({}, this.getRequestOption(), this.screen_obj ));
+      }
       this.$emit('refreshTableData', Object.assign({}, this.getRequestOption(), this.screen_obj) );
     },
     reset () {

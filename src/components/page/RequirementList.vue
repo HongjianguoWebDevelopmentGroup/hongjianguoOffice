@@ -1,17 +1,18 @@
 <template>
 	<div>
-		<table-component :data="tableData" :tableOption="option" ref="table"></table-component>
-		<pop @refresh="refresh" ref="pop" :customer="customer"></pop>
+		<table-component :data="tableData" :tableOption="option" ref="table" @refreshTableData="refreshTableData"></table-component>
+		<pop @refresh="refresh" ref="pop" :customer="customer" :presentId = currentId></pop>
 	</div>
 </template>
 <script>
 import TableComponent from '@/components/common/TableComponent'
 import Pop from '@/components/page_extension/RequirementList_pop'
 import {mapGetters} from 'vuex'
-const URL = '/api/applicantlist';
+import {mapActions} from 'vuex'
+const URL = '/api/customers';
 export default {
 	name: 'requirementList',
-	props: ['customer'],
+	props: ['customer', 'itemData'],
 	data () {
 		return {
 			option: {
@@ -24,7 +25,7 @@ export default {
 					{ type: 'selection' },
 					{ 
 						type: 'text', 
-						prop: 'residence', 
+						prop: 'citizenship', 
 						label: '国家',
 						// render_text: _=>this.caseMap.get(Number.parseInt(_)),
 					},
@@ -37,7 +38,7 @@ export default {
 					{ type: 'text', prop: 'postcode', label: '邮编' },
 					{ type: 'text', prop: 'english_name', label: '英文名称' },
 					{ type: 'text', prop: 'english_address', label: '英文地址' },
-					{ type: 'text', prop: 'reduction ', label: '费减备案' },
+					{ type: 'text', prop: 'reduction', label: '费减备案' },
 					{ 
 						type: 'action',
 						width: '100',
@@ -46,7 +47,6 @@ export default {
 							{ type: 'edit', click:  this.editPop },
 							{ type: 'delete', click:  this.clientDelete }
 						]
-					
 					},
 				],
 				is_pagination: false,
@@ -54,27 +54,28 @@ export default {
 				is_search: false,			
 			},
 			tableData: [],
+			currentId :{}
 		};
 	},
-	computed: {
-		...mapGetters([
-			'caseMap',
-		]),
-	},
-	created(){
-		const url = `${URL}/${this.customer.id}`;
-			// const data = Object.assign({},option);
-			const success = _=>{
-				this.tableData = _.data.data;
-			}
-			// this.$axiosGet({url, data, success});
-			this.$axiosGet({
-				url: url,
-				data: Object.assign({}, this.option),
-				success,
-			})
+	// computed: {
+	// 	...mapGetters([
+	// 		'applicantData',
+	// 		'caseMap',
+	// 	]),	
+	// },
+	mounted(){
 	},
 	methods: {
+		refreshTableData(option) {
+  		const success = _=>{
+				this.tableData = _.data;  
+			}
+  		this.$axiosGet({
+  			url: `${URL}/${this.customer.id}/applicants`,
+  			data: Object.assign({}, option),
+  			success,
+			})
+  	    },
 		addPop () {
 			this.$refs.pop.show();
 		},
@@ -83,28 +84,37 @@ export default {
 		},
 		editPop (row) {
 			this.$refs.pop.show('edit', row);
+			this.currentId = row.id
 		},
-		clientDelete () {
-			const url = `${URL}/${this.customer.id}`;
+		update () {
+			this.$refs.table.update();
+		},
+		clientDelete (row) {
+			const url = `${URL}/${this.customer.id}/applicants/${row.id}`;
 			this.$confirm(
-				'此操作将永久删除该信息, 是否继续?', '提示', {
+				'此操作将永久删除该邮件, 是否继续?', '提示', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				type: 'warning'
-			}).then(()=>{
-				const success = _=>{ 
+				}).then(()=>{
+					const success = _=>{ 
 					this.update();
-					this.$message({message: '删除成功', type: 'success'}) 
-			};
+					this.$message({message: '删除申请人成功！', type: 'success'}) 
+				};
 
-				this.axiosDelete({url, success});
-			}).catch(()=>{
+				this.$axiosDelete({url, success});
+				}).catch(()=>{
 				this.$message({
 					type: 'info',
 					message: '已取消删除！'
 				})
 			})
 		},
+	},
+	watch:{
+		itemData(){
+			this.tableData = this.itemData;
+		}
 	},
 	components: {
 		TableComponent,
